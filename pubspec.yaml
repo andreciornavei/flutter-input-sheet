@@ -1,8 +1,8 @@
 name: input_sheet
-description: A new Flutter package project.
+description: A flutter package to help apps with simple forms
 version: 0.0.1
-author:
-homepage:
+author: André Ciornavei
+homepage: https://github.com/andreciornavei/flutter-input-sheet
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -10,6 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  intl: ^0.15.8
+  flutter_masked_text: ^0.8.0
+  flutter_feather_icons: ^1.0.3
+  flutter_cupertino_date_picker: ^1.0.12
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +26,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  uses-material-design: true
   # To add assets to your package, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
