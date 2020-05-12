@@ -11,9 +11,17 @@ dependencies:
   flutter:
     sdk: flutter
 
+  uuid: ^2.0.4
   intl: ^0.15.8
+  quiver: 2.0.5
+  camera: ^0.5.7+4
+  path_provider: ^1.6.5
+  video_compress: ^2.0.0
+  video_player: ^0.10.8+1
   flutter_masked_text: ^0.8.0
   flutter_feather_icons: ^1.0.3
+  cached_network_image: ^2.0.0-rc
+  permission_handler: ^4.4.0+hotfix.2
   flutter_cupertino_date_picker: ^1.0.12
 
 dev_dependencies:

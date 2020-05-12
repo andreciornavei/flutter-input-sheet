@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-import '../colors.dart';
+import '../utils/colors.dart';
 import 'IpsInput.dart';
 
-class IpsInputMask implements IpsInput {
+class IpsInputMask extends IpsInput {
   final TextInputType _textInputType;
   final String _value;
   final String _placeholder;
   final List<String> _masks;
   final Function(String) _onDone;
+  final bool autofocus;
 
   MaskedTextController maskedController;
 
@@ -19,7 +20,9 @@ class IpsInputMask implements IpsInput {
     this._placeholder,
     this._masks,
     this._value,
-    this._onDone,
+    this._onDone,{
+      this.autofocus: false
+    }
   ) {
     this.maskedController = new MaskedTextController(
       mask: identify(_value?.length ?? 0),
@@ -42,13 +45,25 @@ class IpsInputMask implements IpsInput {
   }
 
   @override
-  Widget widget() {
+  onDone() {
+    if (_onDone != null) {
+      _onDone(maskedController.value.text);
+    }
+  }
+
+  @override
+  State<StatefulWidget> createState() => _IpsInputMask();
+}
+
+class _IpsInputMask extends State<IpsInputMask> {
+  @override
+  Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
+      autofocus: this.widget.autofocus,
       textAlign: TextAlign.center,
-      keyboardType: _textInputType,
+      keyboardType: this.widget._textInputType,
       textInputAction: TextInputAction.done,
-      controller: maskedController,
+      controller: this.widget.maskedController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,
@@ -57,7 +72,7 @@ class IpsInputMask implements IpsInput {
       ),
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: _placeholder,
+        hintText: this.widget._placeholder,
         hintStyle: TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.bold,
@@ -66,12 +81,5 @@ class IpsInputMask implements IpsInput {
         ),
       ),
     );
-  }
-
-  @override
-  onDone() {
-    if (_onDone != null) {
-      _onDone(maskedController.value.text);
-    }
   }
 }

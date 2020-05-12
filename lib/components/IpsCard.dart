@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../colors.dart';
+import '../utils/colors.dart';
 
 class IpsCard extends StatelessWidget {
   final Widget label;

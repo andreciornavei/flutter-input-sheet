@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:input_sheet/inputs/IpsInput.dart';
 import 'package:intl/intl.dart';
 
-import 'IpsInput.dart';
-
-class IpsInputDate implements IpsInput {
+class IpsInputDate extends IpsInput {
   Function(String) _onDone;
   String value;
   String format;
@@ -29,26 +28,31 @@ class IpsInputDate implements IpsInput {
   }
 
   @override
-  Widget widget() {
-    return DatePickerWidget(
-      locale: this.locale,
-      pickerTheme: DateTimePickerTheme(
-        showTitle: false,
-      ),
-      dateFormat: this.pickerFormat,
-      minDateTime: minDateTime,
-      maxDateTime: maxDateTime,
-      initialDateTime: currentDate,
-      onChange: (DateTime newValue, List<int> ints) {
-        currentDate = newValue;
-      },
-    );
-  }
-
-  @override
   onDone() {
     if (_onDone != null) {
       _onDone(new DateFormat(this.format).format(this.currentDate));
     }
+  }
+
+  @override
+  State<StatefulWidget> createState() => _IpsInputDate();
+}
+
+class _IpsInputDate extends State<IpsInputDate> {
+  @override
+  Widget build(BuildContext context) {
+    return DatePickerWidget(
+      locale: this.widget.locale,
+      pickerTheme: DateTimePickerTheme(
+        showTitle: false,
+      ),
+      dateFormat: this.widget.pickerFormat,
+      minDateTime: this.widget.minDateTime,
+      maxDateTime: this.widget.maxDateTime,
+      initialDateTime: this.widget.currentDate,
+      onChange: (DateTime newValue, List<int> ints) {
+        this.widget.currentDate = newValue;
+      },
+    );
   }
 }

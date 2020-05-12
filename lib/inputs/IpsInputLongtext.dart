@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../colors.dart';
+import '../utils/colors.dart';
 import 'IpsInput.dart';
 
-class IpsInputLongtext implements IpsInput {
+class IpsInputLongtext extends IpsInput {
+  final bool autofocus;
   final String value;
   final String placeholder;
   final Function(String) _onDone;
@@ -12,6 +13,7 @@ class IpsInputLongtext implements IpsInput {
 
   IpsInputLongtext(
     this._onDone, {
+    this.autofocus: false,
     this.value,
     this.placeholder,
   }) {
@@ -21,15 +23,25 @@ class IpsInputLongtext implements IpsInput {
   }
 
   @override
-  Widget widget() {
+  onDone() {
+    _onDone(inputController.value.text);
+  }
+
+  @override
+  State<StatefulWidget> createState() => _IpsInputLongtext();
+}
+
+class _IpsInputLongtext extends State<IpsInputLongtext> {
+  @override
+  Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
+      autofocus: this.widget.autofocus,
       textAlign: TextAlign.left,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.newline,
       minLines: 1,
       maxLines: 8,
-      controller: inputController,
+      controller: this.widget.inputController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,
@@ -39,7 +51,7 @@ class IpsInputLongtext implements IpsInput {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
         border: InputBorder.none,
-        hintText: placeholder,
+        hintText: this.widget.placeholder,
         hintStyle: TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.bold,
@@ -48,10 +60,5 @@ class IpsInputLongtext implements IpsInput {
         ),
       ),
     );
-  }
-
-  @override
-  onDone() {
-    _onDone(inputController.value.text);
   }
 }

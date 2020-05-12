@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-import '../colors.dart';
+import '../utils/colors.dart';
 import 'IpsInput.dart';
 
-class IpsInputNumber implements IpsInput {
+class IpsInputNumber extends IpsInput {
   final Function(double) _onDone;
   final double value;
   final String placeholder;
@@ -13,6 +13,7 @@ class IpsInputNumber implements IpsInput {
   final String thousandSeparator;
   final String leftSymbol;
   final int precision;
+  final bool autofocus;
   MoneyMaskedTextController inputController;
 
   IpsInputNumber(
@@ -23,6 +24,7 @@ class IpsInputNumber implements IpsInput {
     this.thousandSeparator: "",
     this.leftSymbol: "",
     this.precision: 0,
+    this.autofocus: false
   }) {
     this.inputController = inputController = new MoneyMaskedTextController(
       decimalSeparator: this.decimalSeparator,
@@ -34,13 +36,23 @@ class IpsInputNumber implements IpsInput {
   }
 
   @override
-  Widget widget() {
+  onDone() {
+    _onDone(inputController.numberValue);
+  }
+
+  @override
+  State<StatefulWidget> createState() => _IpsInputNumber();
+}
+
+class _IpsInputNumber extends State<IpsInputNumber> {
+  @override
+  Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
+      autofocus: this.widget.autofocus,
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
-      controller: inputController,
+      controller: this.widget.inputController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,
@@ -49,7 +61,7 @@ class IpsInputNumber implements IpsInput {
       ),
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: placeholder,
+        hintText: this.widget.placeholder,
         hintStyle: TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.bold,
@@ -58,10 +70,5 @@ class IpsInputNumber implements IpsInput {
         ),
       ),
     );
-  }
-
-  @override
-  onDone() {
-    _onDone(inputController.numberValue);
   }
 }

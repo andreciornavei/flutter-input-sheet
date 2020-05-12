@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'IpsInput.dart';
 
-class IpsInputOptions implements IpsInput {
+class IpsInputOptions extends IpsInput {
   FixedExtentScrollController scrollCtrl;
   //ValueChanged<int> valueChanged;
 
@@ -37,22 +37,27 @@ class IpsInputOptions implements IpsInput {
   }
 
   @override
-  Widget widget() {
+  State<StatefulWidget> createState() => _IpsInputOptions();
+}
+
+class _IpsInputOptions extends State<IpsInputOptions> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
       height: 210,
       decoration: BoxDecoration(color: Colors.white),
       child: CupertinoPicker.builder(
         backgroundColor: Colors.white,
-        scrollController: scrollCtrl,
+        scrollController: this.widget.scrollCtrl,
         itemExtent: 36,
         //onSelectedItemChanged: valueChanged,
-        childCount: options.length,
+        childCount: this.widget.options.length,
         itemBuilder: (context, index) => Container(
           height: 36,
           alignment: Alignment.center,
           child: Text(
-            options[options.keys.toList()[index]],
+            this.widget.options[this.widget.options.keys.toList()[index]],
             style: TextStyle(
               color: Color(0xFF000046),
               fontSize: 16.0,

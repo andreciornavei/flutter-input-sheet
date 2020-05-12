@@ -1,7 +1,15 @@
 library input_sheet;
 
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:input_sheet/inputs/IpsInputCamera.dart';
+import 'package:input_sheet/utils/IpsMediaType.dart';
+import 'package:input_sheet/utils/IpsModeCamera.dart';
+import 'package:video_compress/video_compress.dart';
 
 import 'inputs/IpsInputDate.dart';
 import 'inputs/IpsInputLongtext.dart';
@@ -11,18 +19,18 @@ import 'inputs/IpsInputOptions.dart';
 import 'inputs/IpsInputText.dart';
 import 'sheet.dart';
 
-class Ips {
+class InputSheet {
   final BuildContext _context;
   final String label;
   final String cancelText;
   final String doneText;
+  final bool keyboardAutofocus;
 
-  Ips(
-    this._context, {
-    this.label: "Label",
-    this.cancelText: "Cancel",
-    this.doneText: "Done",
-  });
+  InputSheet(this._context,
+      {this.label: "Label",
+      this.cancelText: "Cancel",
+      this.doneText: "Done",
+      this.keyboardAutofocus: false});
 
   text({
     TextInputType textInputType: TextInputType.text,
@@ -30,7 +38,7 @@ class Ips {
     dynamic value,
     Function(dynamic) onDone,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -40,6 +48,7 @@ class Ips {
       placeholder,
       value,
       onDone,
+      autofocus: keyboardAutofocus,
     ));
   }
 
@@ -48,7 +57,7 @@ class Ips {
     String value,
     Function(String) onDone,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -57,6 +66,7 @@ class Ips {
       onDone,
       placeholder: placeholder,
       value: value,
+      autofocus: keyboardAutofocus,
     ));
   }
 
@@ -67,7 +77,7 @@ class Ips {
     List<String> masks,
     Function(dynamic) onDone,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -78,6 +88,7 @@ class Ips {
       masks,
       value,
       onDone,
+      autofocus: keyboardAutofocus,
     ));
   }
 
@@ -86,7 +97,7 @@ class Ips {
     double value,
     Function(double) onDone,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -95,6 +106,7 @@ class Ips {
       onDone,
       placeholder: placeholder,
       value: value,
+      autofocus: keyboardAutofocus,
     ));
   }
 
@@ -107,7 +119,7 @@ class Ips {
     String format,
     String pickerFormat,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -130,7 +142,7 @@ class Ips {
     Map<String, String> options,
     Function(String) onDone,
   }) {
-    IpsSheet(
+    Sheet(
       this._context,
       this.label,
       this.cancelText,
@@ -144,8 +156,58 @@ class Ips {
     );
   }
 
-  slider() {}
-  multioptions() {}
-  photo() {}
-  video() {}
+  photo({
+    File file,
+    String url,
+    double height,
+    ResolutionPreset resolution,
+    @required Function(File, Uint8List) onDone,
+  }) {
+    Sheet(this._context, null, this.cancelText, this.doneText,
+            paddingVertical: 0)
+        .open(
+      new IpsInputCamera(
+        onDone,
+        IpsMediaType.PHOTO,
+        IpsModeCamera.BACK,
+        MediaQuery.of(_context).padding.top,
+        file: file,
+        url: url,
+        height: height,
+        resolution: resolution,
+      ),
+    );
+  }
+
+  video({
+    File file,
+    String url,
+    double height,
+    VideoQuality compress,
+    ResolutionPreset resolution,
+    int timeRecordLimit,
+    @required Function(File, Uint8List) onDone,
+  }) {
+    Sheet(this._context, null, this.cancelText, this.doneText,
+            paddingVertical: 0)
+        .open(
+      new IpsInputCamera(
+        onDone,
+        IpsMediaType.VIDEO,
+        IpsModeCamera.BACK,
+        MediaQuery.of(_context).padding.top,
+        file: file,
+        url: url,
+        height: height,
+        compress: compress,
+        resolution: resolution,
+        timeRecordLimit: timeRecordLimit,
+      ),
+    );
+  }
+
+  //TO-DO
+  //slider() {}
+  //colors() {}
+  //multioptions() {}
 }

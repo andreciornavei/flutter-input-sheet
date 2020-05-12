@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../colors.dart';
+import '../utils/colors.dart';
 
 class IpsError extends StatelessWidget {
   final String message;

@@ -1,0 +1,1 @@
+enum IpsModeCamera { FRONT, BACK }

@@ -5,8 +5,10 @@ class IpsColors {
   static MaterialColor gray = IpsColors.factoryColor(0xff707070);
   static MaterialColor mute = IpsColors.factoryColor(0xff9EA4B9);
   static MaterialColor red = IpsColors.factoryColor(0xffF98E81);
+  static MaterialColor light = IpsColors.factoryColor(0xfff4f4f4);
   static MaterialColor shadow = IpsColors.factoryColor(0xffE7EAF0);
   static MaterialColor border = IpsColors.factoryColor(0xffD8D8D8);  
+  static MaterialColor white = IpsColors.factoryColor(0xffffffff);  
   static MaterialColor factoryColor(int color) {
     return MaterialColor(color, <int, Color>{
       50: Color(color),
