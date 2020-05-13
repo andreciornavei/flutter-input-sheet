@@ -180,7 +180,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
 
   recordVideo() async {
     if (mediaType == IpsMediaType.VIDEO &&
-        (controller.value?.isRecordingVideo ?? false) == false) {
+        (controller?.value?.isRecordingVideo ?? false) == false) {
       try {
         final uuid = Uuid();
         final directory = await getApplicationDocumentsDirectory();
@@ -207,7 +207,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
 
   stopRecord() async {
     if (mediaType == IpsMediaType.VIDEO &&
-        (controller.value?.isRecordingVideo ?? false) == true) {
+        (controller?.value?.isRecordingVideo ?? false) == true) {
       if (!mounted) return;
       timer?.cancel();
       try {
@@ -398,7 +398,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                       ),
                                       child: AspectRatio(
                                         aspectRatio:
-                                            controller.value.aspectRatio,
+                                            controller?.value?.aspectRatio?? 1 / 1,
                                         child: CameraPreview(controller),
                                       ),
                                     ),
@@ -442,14 +442,14 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                           Column(
                                             children: <Widget>[
                                               IpsCameraButton(
-                                                onPress: (controller.value
+                                                onPress: (controller?.value
                                                             ?.isRecordingVideo ??
                                                         false)
                                                     ? stopRecord
                                                     : recordVideo,
                                                 color: IpsColors.red,
                                                 icon: Icon(
-                                                  (controller.value
+                                                  (controller?.value
                                                               ?.isRecordingVideo ??
                                                           false)
                                                       ? FeatherIcons.square
@@ -459,13 +459,13 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                  height: (controller.value
+                                                  height: (controller?.value
                                                               ?.isRecordingVideo ??
                                                           false)
                                                       ? 10
                                                       : 0),
                                               Visibility(
-                                                visible: (controller.value
+                                                visible: (controller?.value
                                                         ?.isRecordingVideo ??
                                                     false),
                                                 child: Text(
@@ -482,7 +482,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                           ),
                                           Visibility(
                                             visible: !(controller
-                                                    .value?.isRecordingVideo ??
+                                                    ?.value?.isRecordingVideo ??
                                                 false),
                                             child: IpsCameraButton(
                                               size: 40,
