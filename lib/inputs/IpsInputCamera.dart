@@ -27,7 +27,11 @@ class IpsInputCamera extends IpsInput {
   IpsModeCamera cameraMode;
   ResolutionPreset resolution;
   VideoQuality compress;
+
   int timeRecordLimit;
+  String sufixRecordTimeout;
+  String labelCompressing;
+  String labelInitializingCamera;
 
   _IpsInputCameraState ipsInputCameraState;
 
@@ -42,6 +46,9 @@ class IpsInputCamera extends IpsInput {
     this.compress,
     this.timeRecordLimit: 60,
     this.resolution: ResolutionPreset.high,
+    this.sufixRecordTimeout: "Sec",
+    this.labelCompressing: "Compressing...",
+    this.labelInitializingCamera: "Camera is not initialized yet",
   }) {
     ipsInputCameraState = _IpsInputCameraState();
   }
@@ -69,7 +76,10 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   IpsModeCamera currentCamera = IpsModeCamera.BACK;
   File _selectedFile;
   //compress variabled
+  //Subscription _subscription;
   bool compressing = false;
+  double compressProgress = 0;
+  //VideoCompress _videoCompress;
 
   void callbackDone({bool pop: true}) async {
     if (_selectedFile != null) {
@@ -86,7 +96,6 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
     } else {
       this.widget._onDone(null, null);
     }
-
     if (pop) {
       Navigator.pop(context);
     }
@@ -113,6 +122,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
     }
     setState(() {
       compressing = false;
+      compressProgress = 0;
       _selectedFile = null;
       callbackDone(pop: true);
     });
@@ -178,7 +188,8 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
         await controller.prepareForVideoRecording().then((_) {
           controller.startVideoRecording(videoFilename);
           setState(() {
-            remainingRecord = "${this.widget.timeRecordLimit} Sec";
+            remainingRecord =
+                "${this.widget.timeRecordLimit} ${this.widget.sufixRecordTimeout??""}";
           });
           initCountdown();
         });
@@ -204,16 +215,21 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
       } catch (_error) {}
       File resolveFile;
       if (this.widget.compress != null) {
+        if (!mounted) return;
         setState(() {
           compressing = true;
+          compressProgress = 0;
         });
         MediaInfo mediaInfo = await VideoCompress.compressVideo(
           videoFilename,
           quality: VideoQuality.LowQuality,
-          deleteOrigin: true, // It's false by default
+          deleteOrigin: true,
+          includeAudio: true,
         );
+        if (!mounted) return;
         setState(() {
           compressing = false;
+          compressProgress = 0;
         });
         resolveFile = mediaInfo.file;
       } else {
@@ -265,7 +281,8 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
     timer.listen((data) {})
       ..onData((CountdownTimer data) {
         setState(() {
-          remainingRecord = "${data.remaining.inSeconds} Sec";
+          remainingRecord =
+              "${data.remaining.inSeconds} ${this.widget.sufixRecordTimeout}";
         });
       })
       ..onDone(() {
@@ -277,6 +294,17 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
 
   @override
   initState() {
+    super.initState();
+    //_videoCompress = new FlutterVideoCompress();
+    /*
+    _subscription = VideoCompress.compressProgress$.subscribe((progress) {
+      //debugPrint('progress: $progress');
+      print("ESTA CHAMANDO O PROGRESSO AQUI ... $progress");
+      setState(() {
+        compressProgress = progress;
+      });
+    });
+    */
     mediaType = this.widget.mediaType;
     currentCamera = this.widget.cameraMode;
     loadCamera();
@@ -288,15 +316,16 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
         ..addListener(listenerVideo)
         ..initialize().then((_) => videoController?.play());
     }
-    super.initState();
   }
 
   @override
   void dispose() {
+    super.dispose();
+    //_subscription?.unsubscribe();
+    VideoCompress.cancelCompression();
     controller?.dispose();
     videoController?.dispose();
     timer?.cancel();
-    super.dispose();
   }
 
   @override
@@ -335,7 +364,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                     replacement: Container(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Camera is not initialized yet",
+                                        this.widget.labelInitializingCamera??"",
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -357,9 +386,9 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                               child:
                                                   CircularProgressIndicator(),
                                             ),
-                                            SizedBox(width: 5),
+                                            SizedBox(width: 15),
                                             Text(
-                                              "Proccessing...",
+                                              this.widget.labelCompressing??"",
                                               style: TextStyle(
                                                 color: Colors.white,
                                               ),

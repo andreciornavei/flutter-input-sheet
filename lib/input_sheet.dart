@@ -161,11 +161,19 @@ class InputSheet {
     String url,
     double height,
     ResolutionPreset resolution,
+    String sufixRecordTimeout,
+    String labelCompressing,
+    String labelInitializingCamera,
     @required Function(File, Uint8List) onDone,
   }) {
-    Sheet(this._context, null, this.cancelText, this.doneText,
-            paddingVertical: 0)
-        .open(
+    Sheet(
+      this._context,
+      null,
+      this.cancelText,
+      this.doneText,
+      paddingVertical: 0,
+      showDoneButton: false,
+    ).open(
       new IpsInputCamera(
         onDone,
         IpsMediaType.PHOTO,
@@ -175,6 +183,9 @@ class InputSheet {
         url: url,
         height: height,
         resolution: resolution,
+        sufixRecordTimeout: sufixRecordTimeout,
+        labelCompressing: labelCompressing,
+        labelInitializingCamera: labelInitializingCamera,
       ),
     );
   }
@@ -186,11 +197,19 @@ class InputSheet {
     VideoQuality compress,
     ResolutionPreset resolution,
     int timeRecordLimit,
+    String sufixRecordTimeout,
+    String labelCompressing,
+    String labelInitializingCamera,
     @required Function(File, Uint8List) onDone,
   }) {
-    Sheet(this._context, null, this.cancelText, this.doneText,
-            paddingVertical: 0)
-        .open(
+    Sheet(
+      this._context,
+      null,
+      this.cancelText,
+      this.doneText,
+      paddingVertical: 0,
+      showDoneButton: false,
+    ).open(
       new IpsInputCamera(
         onDone,
         IpsMediaType.VIDEO,
@@ -202,6 +221,9 @@ class InputSheet {
         compress: compress,
         resolution: resolution,
         timeRecordLimit: timeRecordLimit,
+        sufixRecordTimeout: sufixRecordTimeout,
+        labelCompressing: labelCompressing,
+        labelInitializingCamera: labelInitializingCamera,
       ),
     );
   }

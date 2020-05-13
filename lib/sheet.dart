@@ -11,6 +11,7 @@ class Sheet {
   final String _cancelText;
   final String _doneText;
   final double paddingVertical;
+  final bool showDoneButton;
 
   Sheet(
     this._context,
@@ -18,6 +19,7 @@ class Sheet {
     this._cancelText,
     this._doneText, {
     this.paddingVertical: 25,
+    this.showDoneButton: true,
   });
 
   open(IpsInput ipsInput) {
@@ -49,7 +51,7 @@ class Sheet {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   RawMaterialButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(_context);
                       ipsInput.onCancel();
                     },
@@ -79,32 +81,35 @@ class Sheet {
                   Expanded(
                     child: SizedBox.shrink(),
                   ),
-                  RawMaterialButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      ipsInput.onDone();
-                    },
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          _doneText,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                  Visibility(
+                    visible: showDoneButton == true,
+                    child: RawMaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        ipsInput.onDone();
+                      },
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            _doneText,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: IpsColors.dark,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            FeatherIcons.check,
+                            size: 21,
                             color: IpsColors.dark,
                           ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          FeatherIcons.check,
-                          size: 21,
-                          color: IpsColors.dark,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
