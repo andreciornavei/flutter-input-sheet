@@ -22,7 +22,7 @@ dependencies:
   flutter_feather_icons: ^1.0.3
   cached_network_image: ^2.0.0-rc
   permission_handler: ^4.4.0+hotfix.2
-  flutter_cupertino_date_picker: ^1.0.12
+  flutter_cupertino_date_picker: ^1.0.12  
 
 dev_dependencies:
   flutter_test:

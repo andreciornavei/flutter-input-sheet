@@ -36,7 +36,7 @@ class InputSheet {
     TextInputType textInputType: TextInputType.text,
     String placeholder: "Placeholder",
     dynamic value,
-    Function(dynamic) onDone,
+    Function(String) onDone,
   }) {
     Sheet(
       this._context,
@@ -93,6 +93,10 @@ class InputSheet {
   }
 
   number({
+    String decimalSeparator: '.',
+    String thousandSeparator: ',',
+    String leftSymbol: "",
+    String rightSymbol: "",
     String placeholder: "Placeholder",
     double value,
     Function(double) onDone,
@@ -111,7 +115,7 @@ class InputSheet {
   }
 
   date({
-    dynamic value,
+    String value,
     Function(String) onDone,
     DateTime minDateTime,
     DateTime maxDateTime,
@@ -161,8 +165,6 @@ class InputSheet {
     String url,
     double height,
     ResolutionPreset resolution,
-    String sufixRecordTimeout,
-    String labelCompressing,
     String labelInitializingCamera,
     @required Function(File, Uint8List) onDone,
   }) {
@@ -183,8 +185,6 @@ class InputSheet {
         url: url,
         height: height,
         resolution: resolution,
-        sufixRecordTimeout: sufixRecordTimeout,
-        labelCompressing: labelCompressing,
         labelInitializingCamera: labelInitializingCamera,
       ),
     );
@@ -194,12 +194,12 @@ class InputSheet {
     File file,
     String url,
     double height,
-    VideoQuality compress,
     ResolutionPreset resolution,
-    int timeRecordLimit,
-    String sufixRecordTimeout,
-    String labelCompressing,
+    VideoQuality compress,
     String labelInitializingCamera,
+    int timeRecordLimit,
+    String labelCompressing,
+    String sufixRecordTimeout,
     @required Function(File, Uint8List) onDone,
   }) {
     Sheet(
