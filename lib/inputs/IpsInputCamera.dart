@@ -107,7 +107,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
     cameras = await availableCameras();
     controller = CameraController(
         cameras[currentCamera == IpsModeCamera.BACK ? 0 : 1],
-        ResolutionPreset.low);
+        this.widget.resolution);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -131,7 +131,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   switchCamera() async {
     if (cameras.length > 1) {
       int newCamera = currentCamera == IpsModeCamera.BACK ? 1 : 0;
-      controller = CameraController(cameras[newCamera], ResolutionPreset.low);
+      controller = CameraController(cameras[newCamera], this.widget.resolution);
       controller.initialize().then((_) {
         setState(() {
           currentCamera =
