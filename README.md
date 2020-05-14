@@ -464,6 +464,7 @@ InputSheet(context).photo(
     height: 300,
     resolution: ResolutionPreset.high,
     labelInitializingCamera: "Unitializing camera...",
+    labelNoCameraAvailable: "There is no camera available on this device",
     onDone: (File file, Uint8List thumbnail) => setState(() {
         _value = file;
         _thumb = thumbnail;
@@ -478,6 +479,7 @@ InputSheet(context).photo(
 | height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                         |
 | resolution              | ResolutionPreset                          | ResolutionPreset is uset to manage camera quality and must to be imported from [camera](https://pub.dev/packages/camera) package  |
 | labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                 |
+| labelNoCameraAvailable | String                                    | A default message to show when has no camera available                                                                                                 |
 | onDone                  | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail                            |
 
 ---
@@ -497,6 +499,7 @@ InputSheet(context).video(
     height: 300,
     resolution: ResolutionPreset.high,
     labelInitializingCamera: "Unitializing camera...",
+    labelNoCameraAvailable: "There is no camera available on this device",
     timeRecordLimit: 60,
     sufixRecordTimeout: "Sec remaining "
     compress: VideoQuality.DefaultQuality,
@@ -515,6 +518,7 @@ InputSheet(context).video(
 | height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                                                       |
 | resolution              | ResolutionPreset                          | ResolutionPreset is uset to manage camera quality and must to be imported from [camera](https://pub.dev/packages/camera) package                               |
 | labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                                               |
+| labelNoCameraAvailable | String                                    | A default message to show when has no camera available                                                                                                 |
 | timeRecordLimit         | int                                       | The time limit to record video                                                                                                                                                  |
 | sufixRecordTimeout      | String                                    | The label suffix to remaining record time                                                                                                                                       |
 | compress                | VideoQuality                              | VideoQuality is optional. Is used to convert video after stop recording and must to be imported from [video_compress](https://pub.dev/packages/video_compress) package  |
