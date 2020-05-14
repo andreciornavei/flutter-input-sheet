@@ -1,5 +1,6 @@
 # flutter-input-sheet
 
+[![Pub](https://img.shields.io/pub/v/input_sheet.svg)](https://pub.dev/packages/input_sheet)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
 A pack of input types implemented as a sheet! 🚀
@@ -19,7 +20,7 @@ It was developed by abstracting and implementing great packages in pub.dev to cr
 Add the latest package version to your pubspeck.yaml dependencies
 
 ```yaml
-input_sheet: ^0.0.1
+input_sheet: <latest_version>
 ```
 ### Dependencies
 

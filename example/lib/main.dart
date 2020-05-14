@@ -183,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 15),
               IpsCard(
-                label: IpsLabel("Your preffered flavor"),
+                label: IpsLabel("Your preferred flavor"),
                 value: IpsValue(_flavors.containsKey(_flavor)
                     ? _flavors[_flavor]
                     : "Touch to select..."),
