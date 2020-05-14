@@ -4,6 +4,8 @@
 
 A pack of input types implemented as a sheet! 🚀
 
+![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/FlutterInputSheet.gif?raw=true)
+
 ## Overview
 
 flutter-input-sheet is a package that shows inputs on sheets.
@@ -32,7 +34,7 @@ flutter_cupertino_date_picker: ^1.0.12
 ### IOS
 You will need to add permissions in your Info.plist to use camera and microphone once the package has an input for photos and videos
 
-```plist
+```xml
 <key>NSCameraUsageDescription</key>
 <string>Can I use the camera please?</string>
 <key>NSMicrophoneUsageDescription</key>
@@ -68,12 +70,33 @@ You will need to add permissions in your AndroidManifest.xml to read and write e
 Was created some basic components to show data information on screen before open the input sheet.
 
 - IpsCard
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsCard.png?raw=true)
+
 - IpsLabel
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsLabel.png?raw=true)
+
 - IpsError
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsError.png?raw=true)
+
 - IpsIcon
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsIcon.png?raw=true)
+
 - IpsValue
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsValue.png?raw=true)
+
 - IpsPhoto
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsPhoto.png?raw=true)
+
 - IpsVideo
+
+    ![](https://github.com/andreciornavei/images/blob/master/flutter-input-sheet/IpsVideo.png?raw=true)
+
 
 ## Examples
 
@@ -331,9 +354,9 @@ InputSheet(context).date(
 
 | Parameters   | Type                 | Description                                                                                  |
 | ------------ | -------------------- | -------------------------------------------------------------------------------------------- |
-| minDateTime  | DateTime             | The min date available to select                                                             |
-| maxDateTime  | DateTime             | The max date abailable to select                                                             |
-| locale       | DateTimePickerLocale | The locale used to translate data                                                            |
+| minDateTime  | DateTime             | Min date available to select                                                             |
+| maxDateTime  | DateTime             | Max date abailable to select                                                             |
+| locale       | DateTimePickerLocale | `locale` is used to translate labels and must to be imported from [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) package                                                            |
 | format       | String               | The format of value inserted in 'value' param                                                |
 | pickerFormat | String               | Add a placeholder to input                                                                   |
 | value        | String               | Add a default value to input                                                                 |
@@ -362,9 +385,9 @@ InputSheet(context).time(
 
 | Parameters    | Type                 | Description                                                                                  |
 | ------------- | -------------------- | -------------------------------------------------------------------------------------------- |
-| minDateTime   | DateTime             | The min date available to select                                                             |
-| maxDateTime   | DateTime             | The max date abailable to select                                                             |
-| locale        | DateTimePickerLocale | The locale used to translate data                                                            |
+| minDateTime   | DateTime             | Min date available to select                                                             |
+| maxDateTime   | DateTime             | Max date abailable to select                                                             |
+| locale        | DateTimePickerLocale | `locale` is used to translate labels and must to be imported from [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) package                                                            |
 | format        | String               | The format of value inserted in 'value' param                                                |
 | pickerFormat  | String               | Add a placeholder to input                                                                   |
 | minuteDivider | int                  | Time between each minute option                                                              |
@@ -394,9 +417,9 @@ InputSheet(context).datetime(
 
 | Parameters    | Type                 | Description                                                                                  |
 | ------------- | -------------------- | -------------------------------------------------------------------------------------------- |
-| minDateTime   | DateTime             | The min date available to select                                                             |
-| maxDateTime   | DateTime             | The max date abailable to select                                                             |
-| locale        | DateTimePickerLocale | The locale used to translate data                                                            |
+| minDateTime   | DateTime             | Min date available to select                                                             |
+| maxDateTime   | DateTime             | Max date abailable to select                                                             |
+| locale        | DateTimePickerLocale | `locale` is used to translate labels and must to be imported from [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) package                                                            |
 | format        | String               | The format of value inserted in 'value' param                                                |
 | pickerFormat  | String               | Add a placeholder to input                                                                   |
 | minuteDivider | int                  | Time between each minute option                                                              |
@@ -453,7 +476,7 @@ InputSheet(context).photo(
 | url                     | String                                    | The uploaded url file to preview the input photo                                                                                                  |
 | file                    | File                                      | The local file who will be edited and used as local preview                                                                                       |
 | height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                         |
-| resolution              | ResolutionPreset                          | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality |
+| resolution              | ResolutionPreset                          | ResolutionPreset is uset to manage camera quality and must to be imported from [camera](https://pub.dev/packages/camera) package  |
 | labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                 |
 | onDone                  | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail                            |
 
@@ -490,11 +513,11 @@ InputSheet(context).video(
 | url                     | String                                    | The uploaded url file to preview the input video                                                                                                                                |
 | file                    | File                                      | The local file who will be edited and used as local preview                                                                                                                     |
 | height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                                                       |
-| resolution              | ResolutionPreset                          | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality                               |
+| resolution              | ResolutionPreset                          | ResolutionPreset is uset to manage camera quality and must to be imported from [camera](https://pub.dev/packages/camera) package                               |
 | labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                                               |
 | timeRecordLimit         | int                                       | The time limit to record video                                                                                                                                                  |
 | sufixRecordTimeout      | String                                    | The label suffix to remaining record time                                                                                                                                       |
-| compress                | VideoQuality                              | VideoQuality is optional and is imported from [video_compress](https://pub.dev/packages/video_compress) package. Is informed, the video will be converted after stop recording. |
+| compress                | VideoQuality                              | VideoQuality is optional. Is used to convert video after stop recording and must to be imported from [video_compress](https://pub.dev/packages/video_compress) package  |
 | labelCompressing        | String                                    | If compress is informed, this message will apper on screen to inform the video conversion.                                                                                      |
 | onDone                  | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail                                                          |
 

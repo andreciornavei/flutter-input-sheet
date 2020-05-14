@@ -1,4 +1,6 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../utils/colors.dart';
@@ -16,10 +18,9 @@ class IpsInputText extends IpsInput {
     this._textInputType,
     this._placeholder,
     this._value,
-    this._onDone,{
-      this.autofocus = false,
-    }
-  ) {
+    this._onDone, {
+    this.autofocus = false,
+  }) {
     this.inputController = new TextEditingController(
       text: this._value ?? "",
     );
@@ -34,7 +35,24 @@ class IpsInputText extends IpsInput {
   State<StatefulWidget> createState() => _IpsInputText();
 }
 
-class _IpsInputText extends State<IpsInputText> {
+class _IpsInputText extends State<IpsInputText> with AfterLayoutMixin<IpsInputText> {
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    SystemChannels.textInput.invokeMethod('TextInput.show');
+  }
+
+  @override
+  void dispose() {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(

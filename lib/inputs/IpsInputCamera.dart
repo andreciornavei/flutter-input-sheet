@@ -32,6 +32,7 @@ class IpsInputCamera extends IpsInput {
   String sufixRecordTimeout;
   String labelCompressing;
   String labelInitializingCamera;
+  String labelNoCameraAvailable;
 
   _IpsInputCameraState ipsInputCameraState;
 
@@ -49,6 +50,7 @@ class IpsInputCamera extends IpsInput {
     this.sufixRecordTimeout = "Sec",
     this.labelCompressing = "Compressing...",
     this.labelInitializingCamera = "Camera is not initialized yet",
+    this.labelNoCameraAvailable = "There is no camera available on this device",
   }) {
     ipsInputCameraState = _IpsInputCameraState();
   }
@@ -74,6 +76,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   CameraController controller;
   IpsModeCamera currentCamera = IpsModeCamera.BACK;
   File _selectedFile;
+  bool availableCamera;
   //compress variabled
   //Subscription _subscription;
   bool compressing = false;
@@ -104,15 +107,23 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
 
   loadCamera() async {
     cameras = await availableCameras();
-    controller = CameraController(
-        cameras[currentCamera == IpsModeCamera.BACK ? 0 : 1],
-        this.widget.resolution);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
+    if (cameras.length == 0) {
+      setState(() {
+        availableCamera = false;
+      });
+    } else {
+      controller = CameraController(
+          cameras[currentCamera == IpsModeCamera.BACK ? 0 : 1],
+          this.widget.resolution);
+      controller.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          availableCamera = true;
+        });
+      });
+    }
   }
 
   discardMedia() async {
@@ -188,7 +199,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
           controller.startVideoRecording(videoFilename);
           setState(() {
             remainingRecord =
-                "${this.widget.timeRecordLimit} ${this.widget.sufixRecordTimeout??""}";
+                "${this.widget.timeRecordLimit} ${this.widget.sufixRecordTimeout ?? ""}";
           });
           initCountdown();
         });
@@ -350,10 +361,21 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                             true,
                                     replacement: Container(
                                       alignment: Alignment.center,
-                                      child: Text(
-                                        this.widget.labelInitializingCamera??"",
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                      child: Visibility(
+                                        visible: availableCamera == false,
+                                        replacement: Text(
+                                          this.widget.labelInitializingCamera ??
+                                              "",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          this.widget.labelNoCameraAvailable ??
+                                              "",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -375,7 +397,8 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                             ),
                                             SizedBox(width: 15),
                                             Text(
-                                              this.widget.labelCompressing??"",
+                                              this.widget.labelCompressing ??
+                                                  "",
                                               style: TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -385,7 +408,8 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                       ),
                                       child: AspectRatio(
                                         aspectRatio:
-                                            controller?.value?.aspectRatio?? 1 / 1,
+                                            controller?.value?.aspectRatio ??
+                                                1 / 1,
                                         child: CameraPreview(controller),
                                       ),
                                     ),
@@ -393,15 +417,20 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                 ),
                               ),
                               Visibility(
-                                visible: compressing != true,
-                                replacement: Positioned(
+                                visible: compressing == true ||
+                                    availableCamera == false ||
+                                    (controller?.value?.isInitialized ??
+                                            false) ==
+                                        false,
+                                child: Positioned(
                                   bottom: 50,
                                   left: 0,
                                   right: 0,
                                   child: Container(),
                                 ),
-                                child: Visibility(
-                                  visible: this.widget.mediaType == IpsMediaType.PHOTO,
+                                replacement: Visibility(
+                                  visible: this.widget.mediaType ==
+                                      IpsMediaType.PHOTO,
                                   replacement: Positioned(
                                     bottom: 50,
                                     left: 0,
@@ -413,7 +442,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                         children: <Widget>[
                                           Visibility(
                                             visible: !(controller
-                                                    .value?.isRecordingVideo ??
+                                                    ?.value?.isRecordingVideo ??
                                                 false),
                                             child: IpsCameraButton(
                                               size: 40,
@@ -566,7 +595,8 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                 left: 0,
                                 right: 0,
                                 child: Visibility(
-                                  visible: this.widget.mediaType == IpsMediaType.PHOTO,
+                                  visible: this.widget.mediaType ==
+                                      IpsMediaType.PHOTO,
                                   replacement: Container(
                                     child: Row(
                                       mainAxisAlignment:

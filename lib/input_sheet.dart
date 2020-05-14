@@ -234,6 +234,7 @@ class InputSheet {
     double height,
     ResolutionPreset resolution = ResolutionPreset.high,
     String labelInitializingCamera = "Camera is not initialized yet",
+    String labelNoCameraAvailable = "There is no camera available on this device",
     @required Function(File, Uint8List) onDone,
   }) {
     Sheet(
@@ -254,6 +255,7 @@ class InputSheet {
         height: height,
         resolution: resolution,
         labelInitializingCamera: labelInitializingCamera,
+        labelNoCameraAvailable: labelNoCameraAvailable,
       ),
     );
   }
@@ -268,6 +270,7 @@ class InputSheet {
     String labelCompressing = "Compressing...",
     ResolutionPreset resolution = ResolutionPreset.high,
     String labelInitializingCamera = "Camera is not initialized yet",
+    String labelNoCameraAvailable = "There is no camera available on this device",
     @required Function(File, Uint8List) onDone,
   }) {
     Sheet(
@@ -292,6 +295,7 @@ class InputSheet {
         sufixRecordTimeout: sufixRecordTimeout,
         labelCompressing: labelCompressing,
         labelInitializingCamera: labelInitializingCamera,
+        labelNoCameraAvailable: labelNoCameraAvailable,
       ),
     );
   }

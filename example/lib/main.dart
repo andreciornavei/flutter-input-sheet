@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: IpsLabel("Name"),
                 value: IpsValue(_name ?? "Touch to edit..."),
                 icon: IpsIcon(FeatherIcons.user),
-                error: IpsError(_errors['name']),
+                error: IpsError(_errors['_name']),
                 onClick: () => InputSheet(
                   context,
                   label: "Name",
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: IpsLabel("Describe about you"),
                 value: IpsValue(_about ?? "Touch to edit..."),
                 icon: IpsIcon(FeatherIcons.fileText),
-                error: IpsError(_errors['about']),
+                error: IpsError(_errors['_about']),
                 onClick: () => InputSheet(
                   context,
                   label: "About you",
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: IpsLabel("Phone"),
                 value: IpsValue(_phone ?? "Touch to edit..."),
                 icon: IpsIcon(FeatherIcons.phone),
-                error: IpsError(_errors['phone']),
+                error: IpsError(_errors['_phone']),
                 onClick: () => InputSheet(
                   context,
                   label: "Phone",
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: IpsLabel("Set your salary"),
                 value: IpsValue(_currency == null ? "Touch to edit..." : Formatters.formatUS(_currency).symbolOnLeft),
                 icon: IpsIcon(FeatherIcons.dollarSign),
-                error: IpsError(_errors['currency']),
+                error: IpsError(_errors['_currency']),
                 onClick: () => InputSheet(
                   context,
                   label: "Set your salary",
@@ -188,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ? _flavors[_flavor]
                     : "Touch to select..."),
                 icon: IpsIcon(FeatherIcons.menu),
-                error: IpsError(_errors['currency']),
+                error: IpsError(_errors['_currency']),
                 onClick: () => InputSheet(
                   context,
                   label: "Choose a flavor",
