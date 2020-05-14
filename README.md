@@ -17,7 +17,7 @@ It was developed by abstracting and implementing great packages in pub.dev to cr
 
 ## Installation
 
-Add the latest package version to your pubspeck.yaml dependencies
+add this line to pubspec.yaml
 
 ```yaml
 input_sheet: <latest_version>
