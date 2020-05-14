@@ -21,7 +21,7 @@ class IpsInputMask extends IpsInput {
     this._masks,
     this._value,
     this._onDone,{
-      this.autofocus: false
+      this.autofocus = false
     }
   ) {
     this.maskedController = new MaskedTextController(

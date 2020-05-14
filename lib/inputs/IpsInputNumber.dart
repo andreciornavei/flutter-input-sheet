@@ -12,6 +12,7 @@ class IpsInputNumber extends IpsInput {
   final String decimalSeparator;
   final String thousandSeparator;
   final String leftSymbol;
+  final String rightSymbol;
   final int precision;
   final bool autofocus;
   MoneyMaskedTextController inputController;
@@ -20,16 +21,18 @@ class IpsInputNumber extends IpsInput {
     this._onDone, {
     this.placeholder,
     this.value,
-    this.decimalSeparator: "",
-    this.thousandSeparator: "",
-    this.leftSymbol: "",
-    this.precision: 0,
-    this.autofocus: false
+    this.decimalSeparator = "",
+    this.thousandSeparator = "",
+    this.leftSymbol = "",
+    this.rightSymbol = "",
+    this.precision = 0,
+    this.autofocus = false
   }) {
     this.inputController = inputController = new MoneyMaskedTextController(
       decimalSeparator: this.decimalSeparator,
       thousandSeparator: this.thousandSeparator,
       leftSymbol: this.leftSymbol,
+      rightSymbol: this.rightSymbol,
       precision: this.precision,
       initialValue: value == null ? 0 : value,
     );

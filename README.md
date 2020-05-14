@@ -6,11 +6,11 @@ A pack of input types implemented as a sheet! 🚀
 
 ## Overview
 
-flutter-input-sheet is a package that show inputs in sheets instead.
+flutter-input-sheet is a package that shows inputs on sheets.
 
-It was created for the purpose of make simple and enjoyable extensive app forms. Than you can create beauty and customizable data information and edit it on sheets for each one.
+It was created with the purpose of make simple and pleasant extensive forms. You can create custom components to present your data and edit them in sheets for each one.
 
-It was developed abstracting and implementing great packages in pub.dev to make a single and simple package to implement forms.
+It was developed by abstracting and implementing great packages in pub.dev to create a single and simple pack for forms.
 
 ## Installation
 
@@ -19,16 +19,34 @@ Add the latest package version to your pubspeck.yaml dependencies
 ```yaml
 input_sheet: ^0.0.1
 ```
+### Dependencies
 
 Also, this package uses some other libraries that need to be imported in your project to work, this libraries is used in some input types that need constants informed at params.
 
 ```yaml
 camera: ^0.5.7+4
 video_compress: ^2.0.0
-flutter_masked_text: ^0.8.0
 flutter_cupertino_date_picker: ^1.0.12
 ```
 
+### IOS
+You will need to add permissions in your Info.plist to use camera and microphone once the package has an input for photos and videos
+
+```plist
+<key>NSCameraUsageDescription</key>
+<string>Can I use the camera please?</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Can I use the mic please?</string>
+```
+
+### Android
+You will need to add permissions in your AndroidManifest.xml to read and write external storage and manage the camera once the package has an input for photos and videos
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+```
 
 ## ✨ Features
 
@@ -36,14 +54,16 @@ flutter_cupertino_date_picker: ^1.0.12
 - [x] Longtext
 - [x] Masked
 - [x] Number
-- [x] Datetime
+- [x] Date
+- [x] Time
+- [x] DateTime
 - [x] Photo
 - [x] Video
 - [ ] Slider
 - [ ] Color
 - [ ] MultiOption
 
-## 🚀 Basic components
+## ⭐ Basic components
 
 Was created some basic components to show data information on screen before open the input sheet.
 
@@ -55,25 +75,50 @@ Was created some basic components to show data information on screen before open
 - IpsPhoto
 - IpsVideo
 
-## ✨ Examples
+## Examples
 
-### Basic component:
+### Basic card component:
 
-This library implements a basic and optional card component to make your forms simple to show yours data. 
+This library implements a basic and optional card component to simplify its forms when presenting data.
 
 ```dart
-//Your component to show data 
+//Your component to show data
 IpsCard(
     label: IpsLabel("Name"),
     value: IpsValue(_name ?? "Touch to edit..."),
     icon: IpsIcon(FeatherIcons.user),
     error: IpsError(_errors['name']),
-    onClick: () { 
-        //Your sheet implementation 
+    onClick: () {
+        //Your sheet implementation
     },
 );
 ```
---- 
+
+---
+
+### Basic media component:
+
+Also for media types, you may want to preview the media, so I created a simple component to show Photo and Video.
+
+```dart
+//Photo component preview file
+IpsPhoto(
+    file: _photo,
+    onClick: (){
+        //Your sheet implementation
+    }
+);
+
+//Video component preview thumbnail
+IpsVideo(
+    thumbnail: _thumbnailVideo,
+    onClick: (){
+        //Your sheet implementation
+    },
+);
+```
+
+---
 
 ### Opening a sheet:
 
@@ -140,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## The InputSheet factory
 
-It will me instanced for each input sheet type you want to invoke, on this Factory you can pass some scope parameters of your sheet.
+It will be instanced for each input sheet type you want to invoke, on this Factory you can pass some scope parameters of your sheet.
 
 ```dart
 InputSheet(context,
@@ -150,18 +195,22 @@ InputSheet(context,
   keyboardAutofocus: true,
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| label | String | The message showing above input |
-| cancelText | String | The cancel button text  |
-| doneText | String | The confirmation button text |
-| keyboardAutofocus | bool | Auto-focus editable inputs after open sheet |
+
+| Parameters        | Type   | Description                                 |
+| ----------------- | ------ | ------------------------------------------- |
+| label             | String | The message showing above input             |
+| cancelText        | String | The cancel button text                      |
+| doneText          | String | The confirmation button text                |
+| keyboardAutofocus | bool   | Auto-focus editable inputs after open sheet |
 
 ---
 
 ## The input types
 
-### Text
+### **Text**
+
+_This input implements a simple text input._
+
 ```dart
 InputSheet(context).text(
     textInputType: TextInputType.text,
@@ -172,16 +221,20 @@ InputSheet(context).text(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| textInputType | TextInputType | The default keyboard input type
-| placeholder | String | Add a placeholder to input |
-| value | String | Add a default value to input |
-| onDone | Function(String) | Callback function called when done ediding input text |
+
+| Parameters    | Type             | Description                                           |
+| ------------- | ---------------- | ----------------------------------------------------- |
+| textInputType | TextInputType    | The default keyboard input type                       |
+| placeholder   | String           | Add a placeholder to input                            |
+| value         | String           | Add a default value to input                          |
+| onDone        | Function(String) | Callback function called when done ediding input text |
 
 ---
 
-### Longtext
+### **Longtext**
+
+_This input implements a long text input that break lines and increase the sheet height according the value length._
+
 ```dart
 InputSheet(context).longtext(
     placeholder: "Type here...",
@@ -191,16 +244,19 @@ InputSheet(context).longtext(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| placeholder | String | Add a placeholder to input |
-| value | String | Add a default value to input |
-| onDone | Function(String) | Callback function called when done ediding input text |
+
+| Parameters  | Type             | Description                                           |
+| ----------- | ---------------- | ----------------------------------------------------- |
+| placeholder | String           | Add a placeholder to input                            |
+| value       | String           | Add a default value to input                          |
+| onDone      | Function(String) | Callback function called when done ediding input text |
 
 ---
 
-### Mask
-The mask input uses [flutter_masked_text](https://pub.dev/packages/flutter_masked_text) package to manage the mask patterns.
+### **Mask**
+
+_This input uses [flutter_masked_text](https://pub.dev/packages/flutter_masked_text) package to manage the mask patterns and switch from pattern to pattern according the value length, see the package to learn about this patterns._
+
 ```dart
 InputSheet(context).mask(
     masks: ['(00) 0000-0000', '(00) 0 0000-0000'],
@@ -212,22 +268,28 @@ InputSheet(context).mask(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| masks | List<\String> | The mask pattern that the input will use according the number of characters value
-| textInputType | TextInputType | The default keyboard input type
-| placeholder | String | Add a placeholder to input |
-| value | String | Add a default value to input |
-| onDone | Function(String) | Callback function called when done ediding input text |
+
+| Parameters    | Type             | Description                                                                       |
+| ------------- | ---------------- | --------------------------------------------------------------------------------- |
+| masks         | List<\String>    | The mask pattern that the input will use according the number of characters value |
+| textInputType | TextInputType    | The default keyboard input type                                                   |
+| placeholder   | String           | Add a placeholder to input                                                        |
+| value         | String           | Add a default value to input                                                      |
+| onDone        | Function(String) | Callback function called when done ediding input text                             |
 
 ---
 
-### Number
-The number input uses [flutter_masked_text](https://pub.dev/packages/flutter_masked_text) package to manage symbols and separators.
+### **Number**
+
+_This input uses [flutter_masked_text](https://pub.dev/packages/flutter_masked_text) package to manage symbols and separators, then you can configure it to implement `number` or `currency` inputs._
+
 ```dart
 InputSheet(context).number(
     leftSymbol: "to pay:",
-    rightSylbol: "U$",
+    rightSymbol: "U\$",
+    decimalSeparator: ".",
+    thousandSeparator: ",",
+    precision: 2,
     placeholder: "Type here...",
     value: _value,
     onDone: (double value) => setState(() {
@@ -235,24 +297,28 @@ InputSheet(context).number(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| decimalSeparator | String | Default " . " is used only on input |
-| thousandSeparator | String | Default " , " is used only on input  |
-| leftSymbol | String | Blank default, is used only on input |
-| rightSymbol | String | Blank default, is used only on input |
-| placeholder | String | Add a placeholder to input |
-| value | String | Add a default value to input |
-| onDone | Function(String) | Callback function called when done ediding input text |
+
+| Parameters        | Type             | Description                                           |
+| ----------------- | ---------------- | ----------------------------------------------------- |
+| leftSymbol        | String           | Blank default, is used only on input                  |
+| rightSymbol       | String           | Blank default, is used only on input                  |
+| decimalSeparator  | String           | Default " . " is used only on input                   |
+| thousandSeparator | String           | Default " , " is used only on input                   |
+| precision         | int              | The number of decimal places                          |
+| placeholder       | String           | Add a placeholder to input                            |
+| value             | String           | Add a default value to input                          |
+| onDone            | Function(String) | Callback function called when done ediding input text |
 
 ---
 
-### Date
-The number input uses [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) to state management and formatters.
+### **Date**
+
+_This input uses [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) to manage state and formatters on Date picker._
+
 ```dart
 InputSheet(context).date(
-    minDateTime: new DateTime.now().subDays(5),
-    maxDateTime: new DateTime.now(),
+    minDateTime: DateTime.now().subtract(Duration(days: 365 * 100)),
+    maxDateTime: DateTime.now(),
     locale: DateTimePickerLocale.en_us,
     format: "yyyy-MM-dd",
     pickerFormat: "yyyy|MMMM|dd",
@@ -262,20 +328,89 @@ InputSheet(context).date(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| minDateTime | DateTime | The min date available to select |
-| maxDateTime | DateTime | The max date abailable to select  |
-| locale | DateTimePickerLocale | The locale used to translate data |
-| format | String | The format of value inserted in 'value' param |
-| pickerFormat | String | Add a placeholder to input |
-| value | String | Add a default value to input |
-| onDone | Function(String) | Callback function called when select date. It will return with same format of param 'format' |
+
+| Parameters   | Type                 | Description                                                                                  |
+| ------------ | -------------------- | -------------------------------------------------------------------------------------------- |
+| minDateTime  | DateTime             | The min date available to select                                                             |
+| maxDateTime  | DateTime             | The max date abailable to select                                                             |
+| locale       | DateTimePickerLocale | The locale used to translate data                                                            |
+| format       | String               | The format of value inserted in 'value' param                                                |
+| pickerFormat | String               | Add a placeholder to input                                                                   |
+| value        | String               | Add a default value to input                                                                 |
+| onDone       | Function(String)     | Callback function called when select date. It will return with same format of param 'format' |
 
 ---
 
-### Options
+### **Time**
+
+_This input uses [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) to manage state and formatters on Time picker._
+
 ```dart
+InputSheet(context).time(
+    minDateTime: DateTime.now().subtract(Duration(hours: 5)),
+    maxDateTime: DateTime.now().add(Duration(hours: 5)),
+    locale: DateTimePickerLocale.en_us,
+    format: "HH:mm",
+    pickerFormat: "HH|mm",
+    minuteDivider: 15,
+    value: _value,
+    onDone: (String value) => setState(() {
+        _value = value;
+    }),
+);
+```
+
+| Parameters    | Type                 | Description                                                                                  |
+| ------------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| minDateTime   | DateTime             | The min date available to select                                                             |
+| maxDateTime   | DateTime             | The max date abailable to select                                                             |
+| locale        | DateTimePickerLocale | The locale used to translate data                                                            |
+| format        | String               | The format of value inserted in 'value' param                                                |
+| pickerFormat  | String               | Add a placeholder to input                                                                   |
+| minuteDivider | int                  | Time between each minute option                                                              |
+| value         | String               | Add a default value to input                                                                 |
+| onDone        | Function(String)     | Callback function called when select date. It will return with same format of param 'format' |
+
+---
+
+### **Date and Time**
+
+_This input uses [flutter_cupertino_date_picker](https://pub.dev/packages/flutter_cupertino_date_picker) to manage state and formatters on DateTime picker._
+
+```dart
+InputSheet(context).datetime(
+    minDateTime: DateTime.now(),
+    maxDateTime: DateTime.now().add(Duration(days: 7)),
+    locale: DateTimePickerLocale.en_us,
+    format: "yyyy-MM-dd HH:mm",
+    pickerFormat: "yyyy/MM/dd|HH|mm",
+    minuteDivider: 15,
+    value: _value,
+    onDone: (String value) => setState(() {
+        _value = value;
+    }),
+);
+```
+
+| Parameters    | Type                 | Description                                                                                  |
+| ------------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| minDateTime   | DateTime             | The min date available to select                                                             |
+| maxDateTime   | DateTime             | The max date abailable to select                                                             |
+| locale        | DateTimePickerLocale | The locale used to translate data                                                            |
+| format        | String               | The format of value inserted in 'value' param                                                |
+| pickerFormat  | String               | Add a placeholder to input                                                                   |
+| minuteDivider | int                  | Time between each minute option                                                              |
+| value         | String               | Add a default value to input                                                                 |
+| onDone        | Function(String)     | Callback function called when select date. It will return with same format of param 'format' |
+
+---
+
+### **Options**
+
+_This input implements options to select_
+
+```dart
+
 InputSheet(context).date(
     options: { '0':'Chocolate' ,'1':'Vanilla', '2':'Strawberry'},
     value: _value,
@@ -284,16 +419,18 @@ InputSheet(context).date(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| options | Map<\String, \String> | A map with value-key pair to be selected as an option |
-| value | String | A default selected key of options |
-| onDone | Function(String) | Callback function called when select an option. It will return the selected key option |
+
+| Parameters | Type                  | Description                                                                            |
+| ---------- | --------------------- | -------------------------------------------------------------------------------------- |
+| options    | Map<\String, \String> | A map with value-key pair to be selected as an option                                  |
+| value      | String                | A default selected key of options                                                      |
+| onDone     | Function(String)      | Callback function called when select an option. It will return the selected key option |
 
 ---
 
-### Photo
-The photo input uses [camera](https://pub.dev/packages/camera) to handle the camera and need to be imported in your project to pass the parameter `resolution` to perform your camera quality.
+### **Photo**
+
+_This input use [camera](https://pub.dev/packages/camera) to handle camera and need to be imported in your project to pass the parameter `resolution` and perform your camera quality._
 
 The photo input already handler user permission to access camera.
 
@@ -310,23 +447,25 @@ InputSheet(context).photo(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| url | String | The uploaded url file to preview the input photo |
-| file | File | The local file who will be edited and used as local preview |
-| height | double | The height of sheet, by default it uses all screen height |
-| resolution | ResolutionPreset | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality |
-| labelInitializingCamera | String | A default message to show until camera initialize |
-| onDone | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail |
+
+| Parameters              | Type                                      | Description                                                                                                                                       |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url                     | String                                    | The uploaded url file to preview the input photo                                                                                                  |
+| file                    | File                                      | The local file who will be edited and used as local preview                                                                                       |
+| height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                         |
+| resolution              | ResolutionPreset                          | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality |
+| labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                 |
+| onDone                  | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail                            |
 
 ---
 
-### Video
-The video input uses [camera](https://pub.dev/packages/camera) to handle the camera and need to be imported in your project to pass the parameter `resolution` to perform your camera quality.
+### **Video**
 
-The video input also uses [video_compress](https://pub.dev/packages/video_compress) to convert video if neccessary and perform it to reproduce in any web codec environment.
+_This input use [camera](https://pub.dev/packages/camera) to handle camera and need to be imported in your project to pass the parameter `resolution` and perform your camera quality._
 
-The video input already handler user permission to access camera and mic.
+_The video input also use [video_compress](https://pub.dev/packages/video_compress) to convert video if neccessary and perform it to reproduce in any web codec environment._
+
+_The video input already handle user permission to access `camera` and `mic`._
 
 ```dart
 InputSheet(context).video(
@@ -345,18 +484,32 @@ InputSheet(context).video(
     }),
 );
 ```
-| Parameters | Type | Description |
-|-|-|-| 
-| url | String | The uploaded url file to preview the input video |
-| file | File | The local file who will be edited and used as local preview |
-| height | double | The height of sheet, by default it uses all screen height |
-| resolution | ResolutionPreset | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality |
-| labelInitializingCamera | String | A default message to show until camera initialize |
-| timeRecordLimit | int | The time limit to record video |
-| sufixRecordTimeout | String | The label suffix to remaining record time |
-| compress | VideoQuality | VideoQuality is optional and is imported from [video_compress](https://pub.dev/packages/video_compress) package. Is informed, the video will be converted after stop recording. |
-| labelCompressing | String | If compress is informed, this message will apper on screen to inform the video conversion.  |
-| onDone | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail |
+
+| Parameters              | Type                                      | Description                                                                                                                                                                     |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url                     | String                                    | The uploaded url file to preview the input video                                                                                                                                |
+| file                    | File                                      | The local file who will be edited and used as local preview                                                                                                                     |
+| height                  | double                                    | The height of sheet, by default it uses all screen height                                                                                                                       |
+| resolution              | ResolutionPreset                          | ResolutionPreset is imported from [camera](https://pub.dev/packages/camera) and set the resolution you want to apply on camera to perform quality                               |
+| labelInitializingCamera | String                                    | A default message to show until camera initialize                                                                                                                               |
+| timeRecordLimit         | int                                       | The time limit to record video                                                                                                                                                  |
+| sufixRecordTimeout      | String                                    | The label suffix to remaining record time                                                                                                                                       |
+| compress                | VideoQuality                              | VideoQuality is optional and is imported from [video_compress](https://pub.dev/packages/video_compress) package. Is informed, the video will be converted after stop recording. |
+| labelCompressing        | String                                    | If compress is informed, this message will apper on screen to inform the video conversion.                                                                                      |
+| onDone                  | Function(File, file, Uint8List thumbnail) | Callback function called when photo is captured. It will return the file of image and an Uint8List as memory thumbnail                                                          |
+
+---
+
+## 🎉 Acknowledgment
+
+Thanks to all the projects that make this package possible. Especially those that facilitate the management of inputs:
+
+- https://pub.dev/packages/camera
+- https://pub.dev/packages/video_compress
+- https://pub.dev/packages/video_player
+- https://pub.dev/packages/flutter_masked_text
+- https://pub.dev/packages/permission_handler
+- https://pub.dev/packages/flutter_cupertino_date_picker
 
 ---
 

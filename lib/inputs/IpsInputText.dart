@@ -17,7 +17,7 @@ class IpsInputText extends IpsInput {
     this._placeholder,
     this._value,
     this._onDone,{
-      this.autofocus: false,
+      this.autofocus = false,
     }
   ) {
     this.inputController = new TextEditingController(

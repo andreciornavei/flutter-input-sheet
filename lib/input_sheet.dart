@@ -7,6 +7,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:input_sheet/inputs/IpsInputCamera.dart';
+import 'package:input_sheet/inputs/IpsInputDatetime.dart';
+import 'package:input_sheet/inputs/IpsInputTime.dart';
 import 'package:input_sheet/utils/IpsMediaType.dart';
 import 'package:input_sheet/utils/IpsModeCamera.dart';
 import 'package:video_compress/video_compress.dart';
@@ -26,15 +28,17 @@ class InputSheet {
   final String doneText;
   final bool keyboardAutofocus;
 
-  InputSheet(this._context,
-      {this.label: "Label",
-      this.cancelText: "Cancel",
-      this.doneText: "Done",
-      this.keyboardAutofocus: false});
+  InputSheet(
+    this._context, {
+    this.label = "Label",
+    this.cancelText = "Cancel",
+    this.doneText = "Done",
+    this.keyboardAutofocus = false,
+  });
 
   text({
-    TextInputType textInputType: TextInputType.text,
-    String placeholder: "Placeholder",
+    TextInputType textInputType = TextInputType.text,
+    String placeholder = "Placeholder",
     dynamic value,
     Function(String) onDone,
   }) {
@@ -53,7 +57,7 @@ class InputSheet {
   }
 
   longtext({
-    String placeholder: "Placeholder",
+    String placeholder = "Placeholder",
     String value,
     Function(String) onDone,
   }) {
@@ -71,8 +75,8 @@ class InputSheet {
   }
 
   mask({
-    TextInputType textInputType: TextInputType.text,
-    String placeholder: "Placeholder",
+    TextInputType textInputType = TextInputType.text,
+    String placeholder = "Placeholder",
     dynamic value,
     List<String> masks,
     Function(dynamic) onDone,
@@ -93,11 +97,12 @@ class InputSheet {
   }
 
   number({
-    String decimalSeparator: '.',
-    String thousandSeparator: ',',
-    String leftSymbol: "",
-    String rightSymbol: "",
-    String placeholder: "Placeholder",
+    String decimalSeparator = "",
+    String thousandSeparator = "",
+    String leftSymbol = "",
+    String rightSymbol = "",
+    int precision = 0,
+    String placeholder = "Placeholder",
     double value,
     Function(double) onDone,
   }) {
@@ -111,6 +116,11 @@ class InputSheet {
       placeholder: placeholder,
       value: value,
       autofocus: keyboardAutofocus,
+      decimalSeparator: decimalSeparator,
+      thousandSeparator: thousandSeparator,
+      leftSymbol: leftSymbol,
+      rightSymbol: rightSymbol,
+      precision: precision,
     ));
   }
 
@@ -119,9 +129,9 @@ class InputSheet {
     Function(String) onDone,
     DateTime minDateTime,
     DateTime maxDateTime,
-    DateTimePickerLocale locale,
-    String format,
-    String pickerFormat,
+    DateTimePickerLocale locale = DateTimePickerLocale.en_us,
+    String format = "yyyy-MM-dd",
+    String pickerFormat = "yyyy|MMMM|dd",
   }) {
     Sheet(
       this._context,
@@ -137,6 +147,64 @@ class InputSheet {
         pickerFormat: pickerFormat,
         minDateTime: minDateTime,
         maxDateTime: maxDateTime,
+      ),
+    );
+  }
+
+  time({
+    String value,
+    Function(String) onDone,
+    DateTime minDateTime,
+    DateTime maxDateTime,
+    DateTimePickerLocale locale = DateTimePickerLocale.en_us,
+    String format = "HH:mm:ss",
+    String pickerFormat = "HH|mm|ss",
+    int minuteDivider = 1,
+  }) {
+    Sheet(
+      this._context,
+      this.label,
+      this.cancelText,
+      this.doneText,
+    ).open(
+      new IpsInputTime(
+        onDone,
+        value: value,
+        locale: locale,
+        format: format,
+        pickerFormat: pickerFormat,
+        minDateTime: minDateTime,
+        maxDateTime: maxDateTime,
+        minuteDivider: minuteDivider,
+      ),
+    );
+  }
+
+  datetime({
+    String value,
+    Function(String) onDone,
+    DateTime minDateTime,
+    DateTime maxDateTime,
+    DateTimePickerLocale locale = DateTimePickerLocale.en_us,
+    String format = "yyyy/MM/dd HH:mm",
+    String pickerFormat = "yyyy/MM/dd|HH|mm",
+    int minuteDivider = 1,
+  }) {
+    Sheet(
+      this._context,
+      this.label,
+      this.cancelText,
+      this.doneText,
+    ).open(
+      new IpsInputDatetime(
+        onDone,
+        value: value,
+        locale: locale,
+        format: format,
+        pickerFormat: pickerFormat,
+        minDateTime: minDateTime,
+        maxDateTime: maxDateTime,
+        minuteDivider: minuteDivider,
       ),
     );
   }
@@ -164,8 +232,8 @@ class InputSheet {
     File file,
     String url,
     double height,
-    ResolutionPreset resolution,
-    String labelInitializingCamera,
+    ResolutionPreset resolution = ResolutionPreset.high,
+    String labelInitializingCamera = "Camera is not initialized yet",
     @required Function(File, Uint8List) onDone,
   }) {
     Sheet(
@@ -181,8 +249,8 @@ class InputSheet {
         IpsMediaType.PHOTO,
         IpsModeCamera.BACK,
         MediaQuery.of(_context).padding.top,
-        file: file,
         url: url,
+        file: file,
         height: height,
         resolution: resolution,
         labelInitializingCamera: labelInitializingCamera,
@@ -194,12 +262,12 @@ class InputSheet {
     File file,
     String url,
     double height,
-    ResolutionPreset resolution,
     VideoQuality compress,
-    String labelInitializingCamera,
-    int timeRecordLimit,
-    String labelCompressing,
-    String sufixRecordTimeout,
+    int timeRecordLimit = 60,
+    String sufixRecordTimeout = "Sec",
+    String labelCompressing = "Compressing...",
+    ResolutionPreset resolution = ResolutionPreset.high,
+    String labelInitializingCamera = "Camera is not initialized yet",
     @required Function(File, Uint8List) onDone,
   }) {
     Sheet(
@@ -215,8 +283,8 @@ class InputSheet {
         IpsMediaType.VIDEO,
         IpsModeCamera.BACK,
         MediaQuery.of(_context).padding.top,
-        file: file,
         url: url,
+        file: file,
         height: height,
         compress: compress,
         resolution: resolution,

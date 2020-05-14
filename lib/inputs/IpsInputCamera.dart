@@ -44,11 +44,11 @@ class IpsInputCamera extends IpsInput {
     this.url,
     this.height,
     this.compress,
-    this.timeRecordLimit: 60,
-    this.resolution: ResolutionPreset.high,
-    this.sufixRecordTimeout: "Sec",
-    this.labelCompressing: "Compressing...",
-    this.labelInitializingCamera: "Camera is not initialized yet",
+    this.timeRecordLimit = 60,
+    this.resolution = ResolutionPreset.high,
+    this.sufixRecordTimeout = "Sec",
+    this.labelCompressing = "Compressing...",
+    this.labelInitializingCamera = "Camera is not initialized yet",
   }) {
     ipsInputCameraState = _IpsInputCameraState();
   }
@@ -70,7 +70,6 @@ class IpsInputCamera extends IpsInput {
 }
 
 class _IpsInputCameraState extends State<IpsInputCamera> {
-  IpsMediaType mediaType;
   List<CameraDescription> cameras;
   CameraController controller;
   IpsModeCamera currentCamera = IpsModeCamera.BACK;
@@ -83,7 +82,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
 
   void callbackDone({bool pop: true}) async {
     if (_selectedFile != null) {
-      if (mediaType == IpsMediaType.VIDEO) {
+      if (this.widget.mediaType == IpsMediaType.VIDEO) {
         final thumbnailFile = await VideoCompress.getByteThumbnail(
           _selectedFile.path,
           quality: 50,
@@ -146,7 +145,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   //start manage photo
 
   capturePhoto() async {
-    if (mediaType == IpsMediaType.PHOTO) {
+    if (this.widget.mediaType == IpsMediaType.PHOTO) {
       try {
         final uuid = Uuid();
         final directory = await getApplicationDocumentsDirectory();
@@ -179,7 +178,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   CountdownTimer timer;
 
   recordVideo() async {
-    if (mediaType == IpsMediaType.VIDEO &&
+    if (this.widget.mediaType == IpsMediaType.VIDEO &&
         (controller?.value?.isRecordingVideo ?? false) == false) {
       try {
         final uuid = Uuid();
@@ -206,7 +205,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   }
 
   stopRecord() async {
-    if (mediaType == IpsMediaType.VIDEO &&
+    if (this.widget.mediaType == IpsMediaType.VIDEO &&
         (controller?.value?.isRecordingVideo ?? false) == true) {
       if (!mounted) return;
       timer?.cancel();
@@ -295,17 +294,6 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   @override
   initState() {
     super.initState();
-    //_videoCompress = new FlutterVideoCompress();
-    /*
-    _subscription = VideoCompress.compressProgress$.subscribe((progress) {
-      //debugPrint('progress: $progress');
-      print("ESTA CHAMANDO O PROGRESSO AQUI ... $progress");
-      setState(() {
-        compressProgress = progress;
-      });
-    });
-    */
-    mediaType = this.widget.mediaType;
     currentCamera = this.widget.cameraMode;
     loadCamera();
     if (this.widget.file != null) {
@@ -321,7 +309,6 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   @override
   void dispose() {
     super.dispose();
-    //_subscription?.unsubscribe();
     VideoCompress.cancelCompression();
     controller?.dispose();
     videoController?.dispose();
@@ -414,7 +401,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                   child: Container(),
                                 ),
                                 child: Visibility(
-                                  visible: mediaType == IpsMediaType.PHOTO,
+                                  visible: this.widget.mediaType == IpsMediaType.PHOTO,
                                   replacement: Positioned(
                                     bottom: 50,
                                     left: 0,
@@ -545,7 +532,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                           )
                         : Stack(
                             children: <Widget>[
-                              mediaType == IpsMediaType.PHOTO
+                              this.widget.mediaType == IpsMediaType.PHOTO
                                   ? Container(
                                       decoration: BoxDecoration(
                                         color: Colors.black,
@@ -579,7 +566,7 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
                                 left: 0,
                                 right: 0,
                                 child: Visibility(
-                                  visible: mediaType == IpsMediaType.PHOTO,
+                                  visible: this.widget.mediaType == IpsMediaType.PHOTO,
                                   replacement: Container(
                                     child: Row(
                                       mainAxisAlignment:

@@ -16,6 +16,8 @@ import 'package:input_sheet/input_sheet.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:input_sheet/utils/colors.dart';
 
+import 'formatter.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -46,19 +48,21 @@ class _MyHomePageState extends State<MyHomePage> {
   String _phone;
   double _currency;
   String _flavor;
-  String _born_date;
+  String _birth;
+  String _dinner;
+  String _appointment;
   File _photo;
   File _video;
   Uint8List _thumbnailVideo;
 
   Map<String, dynamic> _errors = new Map<String, dynamic>();
+  
   Map<String, String> _flavors = {
     "0": "Chocolate",
     "1": "Vanilla",
-    "3": "Raspberry",
-    "4": "Blackberry",
+    "2": "Strawberry",
   };
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "Name",
                   cancelText: "Cancel",
                   doneText: "Confirm",
+                  keyboardAutofocus: true,
                 ).text(
                   placeholder: "Type here...",
                   value: _name,
@@ -108,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "About you",
                   cancelText: "Cancel",
                   doneText: "Confirm",
+                  keyboardAutofocus: true,
                 ).longtext(
                   placeholder: "Type here...",
                   value: _about,
@@ -131,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "Phone",
                   cancelText: "Cancel",
                   doneText: "Confirm",
+                  keyboardAutofocus: true,
                 ).mask(
                   textInputType: TextInputType.number,
                   placeholder: "Type here...",
@@ -147,16 +154,22 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 15),
               IpsCard(
-                label: IpsLabel("Currency"),
-                value: IpsValue(_currency?.toString() ?? "Touch to edit..."),
+                label: IpsLabel("Set your salary"),
+                value: IpsValue(_currency == null ? "Touch to edit..." : Formatters.formatUS(_currency).symbolOnLeft),
                 icon: IpsIcon(FeatherIcons.dollarSign),
                 error: IpsError(_errors['currency']),
                 onClick: () => InputSheet(
                   context,
-                  label: "Phone",
+                  label: "Set your salary",
                   cancelText: "Cancel",
                   doneText: "Confirm",
+                  keyboardAutofocus: true,
                 ).number(
+                  leftSymbol: "my salary is: ",
+                  rightSymbol: " U\$",
+                  decimalSeparator: ".",
+                  thousandSeparator: ",",
+                  precision: 2,
                   placeholder: "Type here...",
                   value: _currency ?? 0,
                   onDone: (double value) => setState(() {
@@ -174,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: IpsValue(_flavors.containsKey(_flavor)
                     ? _flavors[_flavor]
                     : "Touch to select..."),
-                icon: IpsIcon(FeatherIcons.facebook),
+                icon: IpsIcon(FeatherIcons.menu),
                 error: IpsError(_errors['currency']),
                 onClick: () => InputSheet(
                   context,
@@ -191,25 +204,79 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 25),
               Text(
-                'Options example:',
+                'Date example:',
               ),
               SizedBox(height: 15),
               IpsCard(
-                label: IpsLabel("Your born date"),
-                value: IpsValue(_born_date ?? "Touch to pick..."),
-                icon: IpsIcon(CupertinoIcons.down_arrow),
-                error: IpsError(_errors['_born_date']),
+                label: IpsLabel("Your birth date"),
+                value: IpsValue(_birth ?? "Touch to select..."),
+                icon: IpsIcon(FeatherIcons.calendar),
+                error: IpsError(_errors['_birth']),
                 onClick: () => InputSheet(
                   context,
-                  label: "Pick a date",
+                  label: "Select a date",
                   cancelText: "Cancel",
                   doneText: "Confirm",
                 ).date(
-                  value: _born_date,
-                  format: "dd/MM/yyyy",
-                  pickerFormat: "dd|MM|yyyy",
+                  value: _birth,
+                  minDateTime: DateTime.now().subtract(Duration(days: 365 * 100)),
+                  maxDateTime: DateTime.now(),
+                  format: "yyyy/MM/dd",
+                  pickerFormat: "yyyy|MMMM|dd",
                   onDone: (String value) => setState(() {
-                    _born_date = value;
+                    _birth = value;
+                  }),
+                ),
+              ),
+              SizedBox(height: 25),
+              Text(
+                'Time example:',
+              ),
+              SizedBox(height: 15),
+              IpsCard(
+                label: IpsLabel("Your dinner time"),
+                value: IpsValue(_dinner ?? "Touch to select..."),
+                icon: IpsIcon(FeatherIcons.clock),
+                error: IpsError(_errors['_dinner']),
+                onClick: () => InputSheet(
+                  context,
+                  label: "Select a time",
+                  cancelText: "Cancel",
+                  doneText: "Confirm",
+                ).time(
+                  value: _dinner,
+                  format: "HH:mm",
+                  pickerFormat: "HH|mm",
+                  minuteDivider: 15,
+                  onDone: (String value) => setState(() {
+                    _dinner = value;
+                  }),
+                ),
+              ),
+              SizedBox(height: 25),
+              Text(
+                'Date and Time example:',
+              ),
+              SizedBox(height: 15),
+              IpsCard(
+                label: IpsLabel("Schedule an appointment"),
+                value: IpsValue(_appointment ?? "Touch to select..."),
+                icon: IpsIcon(FeatherIcons.calendar),
+                error: IpsError(_errors['_appointment']),
+                onClick: () => InputSheet(
+                  context,
+                  label: "Set your appointment",
+                  cancelText: "Cancel",
+                  doneText: "Confirm",
+                ).datetime(
+                  value: _appointment,
+                  minDateTime: DateTime.now(),
+                  maxDateTime: DateTime.now().add(Duration(days: 7)),
+                  format: "yyyy/MM/dd HH:mm",
+                  pickerFormat: "yyyy/MM/dd|HH|mm",
+                  minuteDivider: 15,
+                  onDone: (String value) => setState(() {
+                    _appointment = value;
                   }),
                 ),
               ),

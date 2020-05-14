@@ -13,7 +13,7 @@ class IpsInputLongtext extends IpsInput {
 
   IpsInputLongtext(
     this._onDone, {
-    this.autofocus: false,
+    this.autofocus = false,
     this.value,
     this.placeholder,
   }) {
