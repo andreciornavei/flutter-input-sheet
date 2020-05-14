@@ -434,7 +434,7 @@ _This input implements options to select_
 
 ```dart
 
-InputSheet(context).date(
+InputSheet(context).options(
     options: { '0':'Chocolate' ,'1':'Vanilla', '2':'Strawberry'},
     value: _value,
     onDone: (String value) => setState(() {
