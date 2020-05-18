@@ -12,7 +12,8 @@ class IpsInputText extends IpsInput {
   final String _placeholder;
   final Function(String) _onDone;
   final bool autofocus;
-  TextEditingController inputController;
+
+  final _IpsInputText state = _IpsInputText();
 
   IpsInputText(
     this._textInputType,
@@ -20,26 +21,33 @@ class IpsInputText extends IpsInput {
     this._value,
     this._onDone, {
     this.autofocus = false,
-  }) {
-    this.inputController = new TextEditingController(
-      text: this._value ?? "",
-    );
-  }
+  });
 
   @override
   onDone() {
-    _onDone(inputController.value.text);
+    if (_onDone != null) {
+      state.done();
+    }
   }
 
   @override
-  State<StatefulWidget> createState() => _IpsInputText();
+  State<StatefulWidget> createState() => state;
 }
 
-class _IpsInputText extends State<IpsInputText> with AfterLayoutMixin<IpsInputText> {
-  
+class _IpsInputText extends State<IpsInputText>
+    with AfterLayoutMixin<IpsInputText> {
+  TextEditingController inputController;
+
+  void done() {
+    this.widget._onDone(inputController.value.text);
+  }
+
   @override
   void initState() {
     super.initState();
+    this.inputController = new TextEditingController(
+      text: this.widget._value ?? "",
+    );
   }
 
   @override
@@ -60,7 +68,7 @@ class _IpsInputText extends State<IpsInputText> with AfterLayoutMixin<IpsInputTe
       textAlign: TextAlign.center,
       keyboardType: this.widget._textInputType,
       textInputAction: TextInputAction.done,
-      controller: this.widget.inputController,
+      controller: this.inputController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,

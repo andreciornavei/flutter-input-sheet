@@ -18,23 +18,23 @@ import 'package:video_player/video_player.dart';
 import 'IpsInput.dart';
 
 class IpsInputCamera extends IpsInput {
-  Function(File, Uint8List) _onDone;
-  File file;
-  String url;
-  double safePaddingTop;
-  double height;
-  IpsMediaType mediaType;
-  IpsModeCamera cameraMode;
-  ResolutionPreset resolution;
-  VideoQuality compress;
+  final Function(File, Uint8List) _onDone;
+  final File file;
+  final String url;
+  final double safePaddingTop;
+  final double height;
+  final IpsMediaType mediaType;
+  final IpsModeCamera cameraMode;
+  final ResolutionPreset resolution;
+  final VideoQuality compress;
 
-  int timeRecordLimit;
-  String sufixRecordTimeout;
-  String labelCompressing;
-  String labelInitializingCamera;
-  String labelNoCameraAvailable;
+  final int timeRecordLimit;
+  final String sufixRecordTimeout;
+  final String labelCompressing;
+  final String labelInitializingCamera;
+  final String labelNoCameraAvailable;
 
-  _IpsInputCameraState ipsInputCameraState;
+  final _IpsInputCameraState state = _IpsInputCameraState();
 
   IpsInputCamera(
     this._onDone,
@@ -51,24 +51,22 @@ class IpsInputCamera extends IpsInput {
     this.labelCompressing = "Compressing...",
     this.labelInitializingCamera = "Camera is not initialized yet",
     this.labelNoCameraAvailable = "There is no camera available on this device",
-  }) {
-    ipsInputCameraState = _IpsInputCameraState();
-  }
+  });
 
   @override
   onDone() {
     if (_onDone != null) {
-      ipsInputCameraState.callbackDone(pop: false);
+      state.callbackDone(pop: false);
     }
   }
 
   @override
   onCancel() {
-    ipsInputCameraState.callbackDone(pop: false);
+    state.callbackDone(pop: false);
   }
 
   @override
-  _IpsInputCameraState createState() => ipsInputCameraState;
+  _IpsInputCameraState createState() => state;
 }
 
 class _IpsInputCameraState extends State<IpsInputCamera> {
@@ -77,11 +75,10 @@ class _IpsInputCameraState extends State<IpsInputCamera> {
   IpsModeCamera currentCamera = IpsModeCamera.BACK;
   File _selectedFile;
   bool availableCamera;
-  //compress variabled
-  //Subscription _subscription;
+
+  //compress variables
   bool compressing = false;
   double compressProgress = 0;
-  //VideoCompress _videoCompress;
 
   void callbackDone({bool pop: true}) async {
     if (_selectedFile != null) {

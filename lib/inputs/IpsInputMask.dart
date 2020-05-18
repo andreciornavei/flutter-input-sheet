@@ -13,49 +13,52 @@ class IpsInputMask extends IpsInput {
   final Function(String) _onDone;
   final bool autofocus;
 
+  final _IpsInputMask state = _IpsInputMask();
+
+  IpsInputMask(this._textInputType, this._placeholder, this._masks, this._value,
+      this._onDone,
+      {this.autofocus = false});
+
+  @override
+  onDone() {
+    if (_onDone != null) {
+      state.done();
+    }
+  }
+
+  @override
+  State<StatefulWidget> createState() => state;
+}
+
+class _IpsInputMask extends State<IpsInputMask> {
   MaskedTextController maskedController;
 
-  IpsInputMask(
-    this._textInputType,
-    this._placeholder,
-    this._masks,
-    this._value,
-    this._onDone,{
-      this.autofocus = false
-    }
-  ) {
-    this.maskedController = new MaskedTextController(
-      mask: identify(_value?.length ?? 0),
-      text: _value ?? "",
-    );
+  void done() {
+    this.widget._onDone(maskedController.value.text);
+  }
 
+  String identify(int length) {
+    for (String mask in this.widget._masks) {
+      if (length <= mask.length) {
+        return mask;
+      }
+    }
+    return this.widget._masks[this.widget._masks.length - 1];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    maskedController = new MaskedTextController(
+      mask: identify(this.widget._value?.length ?? 0),
+      text: this.widget._value ?? "",
+    );
     maskedController.beforeChange = (String previous, String next) {
       maskedController.updateMask(identify(next.length), moveCursorToEnd: true);
       return true;
     };
   }
 
-  String identify(int length) {
-    for (String mask in this._masks) {
-      if (length <= mask.length) {
-        return mask;
-      }
-    }
-    return this._masks[this._masks.length - 1];
-  }
-
-  @override
-  onDone() {
-    if (_onDone != null) {
-      _onDone(maskedController.value.text);
-    }
-  }
-
-  @override
-  State<StatefulWidget> createState() => _IpsInputMask();
-}
-
-class _IpsInputMask extends State<IpsInputMask> {
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -63,7 +66,7 @@ class _IpsInputMask extends State<IpsInputMask> {
       textAlign: TextAlign.center,
       keyboardType: this.widget._textInputType,
       textInputAction: TextInputAction.done,
-      controller: this.widget.maskedController,
+      controller: this.maskedController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,

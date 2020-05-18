@@ -9,29 +9,42 @@ class IpsInputLongtext extends IpsInput {
   final String value;
   final String placeholder;
   final Function(String) _onDone;
-  TextEditingController inputController;
+
+  final _IpsInputLongtext state = _IpsInputLongtext();
 
   IpsInputLongtext(
     this._onDone, {
     this.autofocus = false,
     this.value,
     this.placeholder,
-  }) {
-    this.inputController = new TextEditingController(
-      text: this.value ?? "",
-    );
-  }
+  });
 
   @override
   onDone() {
-    _onDone(inputController.value.text);
+    if (_onDone != null) {
+      state.done();
+    }
   }
 
   @override
-  State<StatefulWidget> createState() => _IpsInputLongtext();
+  State<StatefulWidget> createState() => state;
 }
 
 class _IpsInputLongtext extends State<IpsInputLongtext> {
+  TextEditingController inputController;
+
+  void done() {
+    this.widget._onDone(inputController.value.text);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.inputController = new TextEditingController(
+      text: this.widget.value ?? "",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -41,7 +54,7 @@ class _IpsInputLongtext extends State<IpsInputLongtext> {
       textInputAction: TextInputAction.newline,
       minLines: 1,
       maxLines: 8,
-      controller: this.widget.inputController,
+      controller: this.inputController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,

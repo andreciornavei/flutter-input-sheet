@@ -56,13 +56,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Uint8List _thumbnailVideo;
 
   Map<String, dynamic> _errors = new Map<String, dynamic>();
-  
+
   Map<String, String> _flavors = {
     "0": "Chocolate",
     "1": "Vanilla",
     "2": "Strawberry",
   };
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,7 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 15),
               IpsCard(
                 label: IpsLabel("Set your salary"),
-                value: IpsValue(_currency == null ? "Touch to edit..." : Formatters.formatUS(_currency).symbolOnLeft),
+                value: IpsValue(_currency == null
+                    ? "Touch to edit..."
+                    : Formatters.formatUS(_currency).symbolOnLeft),
                 icon: IpsIcon(FeatherIcons.dollarSign),
                 error: IpsError(_errors['_currency']),
                 onClick: () => InputSheet(
@@ -219,7 +221,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   doneText: "Confirm",
                 ).date(
                   value: _birth,
-                  minDateTime: DateTime.now().subtract(Duration(days: 365 * 100)),
+                  minDateTime:
+                      DateTime.now().subtract(Duration(days: 365 * 100)),
                   maxDateTime: DateTime.now(),
                   format: "yyyy/MM/dd",
                   pickerFormat: "yyyy|MMMM|dd",
@@ -296,7 +299,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         doneText: "Confirm",
                       ).photo(
                         file: _photo,
-                        onDone: (File file, Uint8List thumbnail) => setState(() {
+                        onDone: (File file, Uint8List thumbnail) =>
+                            setState(() {
                           _photo = file;
                         }),
                       ),
@@ -311,7 +315,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         doneText: "Confirm",
                       ).video(
                         file: _video,
-                        onDone: (File file, Uint8List thumbnail) => setState(() {
+                        onDone: (File file, Uint8List thumbnail) =>
+                            setState(() {
                           _video = file;
                           _thumbnailVideo = thumbnail;
                         }),

@@ -4,16 +4,16 @@ import 'package:input_sheet/inputs/IpsInput.dart';
 import 'package:intl/intl.dart';
 
 class IpsInputTime extends IpsInput {
-  Function(String) _onDone;
-  String value;
-  String format;
-  String pickerFormat;
-  int minuteDivider;
-  DateTimePickerLocale locale;
-  DateTime minDateTime;
-  DateTime maxDateTime;
+  final Function(String) _onDone;
+  final String value;
+  final String format;
+  final String pickerFormat;
+  final int minuteDivider;
+  final DateTimePickerLocale locale;
+  final DateTime minDateTime;
+  final DateTime maxDateTime;
 
-  _IpsInputTime state;
+  final _IpsInputTime state = _IpsInputTime();
 
   IpsInputTime(
     this._onDone, {
@@ -24,9 +24,7 @@ class IpsInputTime extends IpsInput {
     this.format = "HH:mm:ss",
     this.pickerFormat = "HH|mm|ss",
     this.minuteDivider = 1,
-  }) {
-    state = _IpsInputTime();
-  }
+  });
 
   @override
   onDone() {

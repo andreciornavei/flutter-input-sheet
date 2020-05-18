@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IpsInput extends StatefulWidget{
-  
+class IpsInput extends StatefulWidget {
   @required
-  onDone(){
+  onDone() {
     return null;
   }
 
   @required
-  onCancel(){
+  onCancel() {
     return null;
   }
 
@@ -16,5 +15,4 @@ class IpsInput extends StatefulWidget{
   State<StatefulWidget> createState() {
     return null;
   }
-
 }

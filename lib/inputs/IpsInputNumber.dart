@@ -15,39 +15,50 @@ class IpsInputNumber extends IpsInput {
   final String rightSymbol;
   final int precision;
   final bool autofocus;
-  MoneyMaskedTextController inputController;
 
-  IpsInputNumber(
-    this._onDone, {
-    this.placeholder,
-    this.value,
-    this.decimalSeparator = "",
-    this.thousandSeparator = "",
-    this.leftSymbol = "",
-    this.rightSymbol = "",
-    this.precision = 0,
-    this.autofocus = false
-  }) {
-    this.inputController = inputController = new MoneyMaskedTextController(
-      decimalSeparator: this.decimalSeparator,
-      thousandSeparator: this.thousandSeparator,
-      leftSymbol: this.leftSymbol,
-      rightSymbol: this.rightSymbol,
-      precision: this.precision,
-      initialValue: value == null ? 0 : value,
-    );
-  }
+  final _IpsInputNumber state = _IpsInputNumber();
+
+  IpsInputNumber(this._onDone,
+      {this.placeholder,
+      this.value,
+      this.decimalSeparator = "",
+      this.thousandSeparator = "",
+      this.leftSymbol = "",
+      this.rightSymbol = "",
+      this.precision = 0,
+      this.autofocus = false});
 
   @override
   onDone() {
-    _onDone(inputController.numberValue);
+    if (_onDone != null) {
+      state.done();
+    }
   }
 
   @override
-  State<StatefulWidget> createState() => _IpsInputNumber();
+  State<StatefulWidget> createState() => state;
 }
 
 class _IpsInputNumber extends State<IpsInputNumber> {
+  MoneyMaskedTextController inputController;
+
+  void done() {
+    this.widget._onDone(inputController.numberValue);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.inputController = inputController = new MoneyMaskedTextController(
+      decimalSeparator: this.widget.decimalSeparator,
+      thousandSeparator: this.widget.thousandSeparator,
+      leftSymbol: this.widget.leftSymbol,
+      rightSymbol: this.widget.rightSymbol,
+      precision: this.widget.precision,
+      initialValue: this.widget.value == null ? 0 : this.widget.value,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -55,7 +66,7 @@ class _IpsInputNumber extends State<IpsInputNumber> {
       textAlign: TextAlign.center,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
-      controller: this.widget.inputController,
+      controller: this.inputController,
       style: TextStyle(
         fontSize: 19,
         fontWeight: FontWeight.bold,

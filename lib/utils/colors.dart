@@ -7,20 +7,23 @@ class IpsColors {
   static MaterialColor red = IpsColors.factoryColor(0xffF98E81);
   static MaterialColor light = IpsColors.factoryColor(0xfff4f4f4);
   static MaterialColor shadow = IpsColors.factoryColor(0xffE7EAF0);
-  static MaterialColor border = IpsColors.factoryColor(0xffD8D8D8);  
-  static MaterialColor white = IpsColors.factoryColor(0xffffffff);  
+  static MaterialColor border = IpsColors.factoryColor(0xffD8D8D8);
+  static MaterialColor white = IpsColors.factoryColor(0xffffffff);
   static MaterialColor factoryColor(int color) {
-    return MaterialColor(color, <int, Color>{
-      50: Color(color),
-      100: Color(color),
-      200: Color(color),
-      300: Color(color),
-      400: Color(color),
-      500: Color(color),
-      600: Color(color),
-      700: Color(color),
-      800: Color(color),
-      900: Color(color),
-    });
+    return MaterialColor(
+      color,
+      <int, Color>{
+        50: Color(color),
+        100: Color(color),
+        200: Color(color),
+        300: Color(color),
+        400: Color(color),
+        500: Color(color),
+        600: Color(color),
+        700: Color(color),
+        800: Color(color),
+        900: Color(color),
+      },
+    );
   }
 }

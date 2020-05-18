@@ -27,7 +27,7 @@ input_sheet: <latest_version>
 Also, this package uses some other libraries that need to be imported in your project to work, this libraries is used in some input types that need constants informed at params.
 
 ```yaml
-camera: ^0.5.7+4
+camera: ^0.5.8+1
 video_compress: ^2.0.0
 flutter_cupertino_date_picker: ^1.0.12
 ```
@@ -65,6 +65,8 @@ You will need to add permissions in your AndroidManifest.xml to read and write e
 - [ ] Slider
 - [ ] Color
 - [ ] MultiOption
+- [ ] Qrcode
+- [ ] Map
 
 ## ⭐ Basic components
 

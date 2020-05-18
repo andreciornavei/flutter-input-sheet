@@ -4,43 +4,50 @@ import 'package:flutter/material.dart';
 import 'IpsInput.dart';
 
 class IpsInputOptions extends IpsInput {
-  FixedExtentScrollController scrollCtrl;
-  //ValueChanged<int> valueChanged;
+  final Function(String) _onDone;
+  final Map<String, String> options;
+  final String value;
 
-  Function(String) _onDone;
-  Map<String, String> options;
-  String value;
+  final _IpsInputOptions ipsInputOptions = new _IpsInputOptions();
 
   IpsInputOptions(
     this._onDone, {
     this.value,
-    this.options,
-  }) {
-    if (this.options == null) {
-      this.options = {};
-    }
-    scrollCtrl = FixedExtentScrollController(
-      initialItem:
-          this.value == null ? 0 : options.keys.toList().indexOf(this.value),
-    );
-  }
+    this.options = const {},
+  });
 
   @override
   onDone() {
     if (_onDone != null) {
-      _onDone(
-        options.length > 0
-            ? options.keys.toList()[scrollCtrl.selectedItem]
-            : null,
-      );
+      this.ipsInputOptions.done();
     }
   }
 
   @override
-  State<StatefulWidget> createState() => _IpsInputOptions();
+  State<StatefulWidget> createState() => this.ipsInputOptions;
 }
 
 class _IpsInputOptions extends State<IpsInputOptions> {
+  FixedExtentScrollController scrollCtrl;
+
+  void done() {
+    this.widget._onDone(
+          this.widget.options.length > 0
+              ? this.widget.options.keys.toList()[scrollCtrl.selectedItem]
+              : null,
+        );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    scrollCtrl = FixedExtentScrollController(
+      initialItem: this.widget.value == null
+          ? 0
+          : this.widget.options.keys.toList().indexOf(this.widget.value),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,9 +56,9 @@ class _IpsInputOptions extends State<IpsInputOptions> {
       decoration: BoxDecoration(color: Colors.white),
       child: CupertinoPicker.builder(
         backgroundColor: Colors.white,
-        scrollController: this.widget.scrollCtrl,
+        scrollController: this.scrollCtrl,
         itemExtent: 36,
-        //onSelectedItemChanged: valueChanged,
+        onSelectedItemChanged: (int) => {},
         childCount: this.widget.options.length,
         itemBuilder: (context, index) => Container(
           height: 36,
