@@ -33,7 +33,7 @@ class InputSheet {
     this.label = "Label",
     this.cancelText = "Cancel",
     this.doneText = "Done",
-    this.keyboardAutofocus = false,
+    this.keyboardAutofocus = true,
   });
 
   text({

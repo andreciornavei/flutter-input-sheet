@@ -118,6 +118,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  flutter_keyboard_size:
+    dependency: "direct main"
+    description:
+      name: flutter_keyboard_size
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2+2"
   flutter_masked_text:
     dependency: "direct main"
     description:
@@ -163,6 +170,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  keyboard_utils:
+    dependency: "direct main"
+    description:
+      name: keyboard_utils
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
   matcher:
     dependency: transitive
     description:
@@ -177,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   path:
     dependency: transitive
     description:
@@ -247,6 +268,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.5+1"
   quiver:
     dependency: "direct main"
     description:

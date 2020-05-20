@@ -8,8 +8,13 @@ class IpsVideo extends StatelessWidget {
   final Function onClick;
   final double radius;
   final bool readOnly;
-  
-  IpsVideo({this.radius: 10, this.onClick, this.thumbnail, this.readOnly: false});
+
+  IpsVideo({
+    this.radius: 10,
+    this.onClick,
+    this.thumbnail,
+    this.readOnly: false,
+  });
 
   Widget build(BuildContext context) {
     return Stack(

@@ -16,7 +16,9 @@ import 'package:input_sheet/input_sheet.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:input_sheet/utils/colors.dart';
 
-import 'formatter.dart';
+import 'utils/formatter.dart';
+
+
 
 void main() => runApp(MyApp());
 
@@ -89,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "Name",
                   cancelText: "Cancel",
                   doneText: "Confirm",
-                  keyboardAutofocus: true,
                 ).text(
                   placeholder: "Type here...",
                   value: _name,
@@ -113,7 +114,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "About you",
                   cancelText: "Cancel",
                   doneText: "Confirm",
-                  keyboardAutofocus: true,
                 ).longtext(
                   placeholder: "Type here...",
                   value: _about,
@@ -137,7 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "Phone",
                   cancelText: "Cancel",
                   doneText: "Confirm",
-                  keyboardAutofocus: true,
                 ).mask(
                   textInputType: TextInputType.number,
                   placeholder: "Type here...",
@@ -165,7 +164,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: "Set your salary",
                   cancelText: "Cancel",
                   doneText: "Confirm",
-                  keyboardAutofocus: true,
                 ).number(
                   leftSymbol: "my salary is: ",
                   rightSymbol: " U\$",

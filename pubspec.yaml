@@ -1,6 +1,6 @@
 name: input_sheet
 description: A flutter package to help apps with extensive forms, implementing inputs as BottomSheet to make it enjoyable.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/andreciornavei/flutter-input-sheet
 
 environment:
@@ -15,12 +15,14 @@ dependencies:
   quiver: ^2.0.5
   camera: ^0.5.8+1
   path_provider: ^1.6.8
+  keyboard_utils: ^1.2.1
   after_layout: ^1.0.7+2
   video_compress: ^2.0.0
   video_player: ^0.10.11
   flutter_masked_text: ^0.8.0
   flutter_feather_icons: ^1.0.3
   cached_network_image: ^2.2.0+1
+  flutter_keyboard_size: ^0.1.2+2
   permission_handler: ^4.4.0+hotfix.2
   flutter_cupertino_date_picker: ^1.0.24  
 
