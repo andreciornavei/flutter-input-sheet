@@ -50,7 +50,7 @@ class _IpsInputLongtext extends State<IpsInputLongtext> {
     return TextField(
       autofocus: this.widget.autofocus,
       textAlign: TextAlign.left,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
       minLines: 1,
       maxLines: 8,

@@ -87,7 +87,7 @@ class _FirstPage extends State<FirstPage> {
                   label: "Name",
                   cancelText: "Cancel",
                   doneText: "Confirm",
-                ).text(
+                ).longtext(
                   placeholder: "Type here...",
                   value: _name,
                   onDone: (dynamic value) => setState(() {

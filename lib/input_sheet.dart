@@ -13,7 +13,7 @@ import 'package:input_sheet/utils/IpsMediaType.dart';
 import 'package:input_sheet/utils/IpsModeCamera.dart';
 import 'package:video_compress/video_compress.dart';
 
-import 'inputs/IpsInputDate.dart';
+import 'inputs/IpsInputDate/index.dart';
 import 'inputs/IpsInputLongtext.dart';
 import 'inputs/IpsInputMask.dart';
 import 'inputs/IpsInputNumber.dart';

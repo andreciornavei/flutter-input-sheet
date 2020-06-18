@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:input_sheet/inputs/IpsInput.dart';
 import 'package:intl/intl.dart';
+
+import 'controller.dart';
 
 class IpsInputDate extends IpsInput {
   final Function(String) _onDone;
@@ -36,38 +39,33 @@ class IpsInputDate extends IpsInput {
 }
 
 class _IpsInputDate extends State<IpsInputDate> {
-  DateTime _currentDate;
+  IpsInputDateController controller;
 
   void done() {
-    this
-        .widget
-        ._onDone(new DateFormat(this.widget.format).format(_currentDate));
+    this.widget._onDone(
+        new DateFormat(this.widget.format).format(controller.currentDate));
   }
 
   @override
   void initState() {
     super.initState();
-    _currentDate = this.widget.value == null
-        ? DateTime.now()
-        : new DateFormat(this.widget.format).parse(this.widget.value);
+    controller =
+        new IpsInputDateController(this.widget.format, this.widget.value);
   }
 
   @override
   Widget build(BuildContext context) {
-    return DatePickerWidget(
-      locale: this.widget.locale,
-      pickerTheme: DateTimePickerTheme(
-        showTitle: false,
+    return Observer(
+      builder: (_) => DatePickerWidget(
+        locale: this.widget.locale,
+        pickerTheme: DateTimePickerTheme(showTitle: false),
+        dateFormat: this.widget.pickerFormat,
+        minDateTime: this.widget.minDateTime,
+        maxDateTime: this.widget.maxDateTime,
+        initialDateTime: controller.currentDate,
+        onMonthChangeStartWithFirstDate: false,
+        onChange: controller.setCurrentDate,
       ),
-      dateFormat: this.widget.pickerFormat,
-      minDateTime: this.widget.minDateTime,
-      maxDateTime: this.widget.maxDateTime,
-      initialDateTime: this._currentDate,
-      onChange: (DateTime newValue, List<int> ints) {
-        setState(() {
-          _currentDate = newValue;
-        });
-      },
     );
   }
 }

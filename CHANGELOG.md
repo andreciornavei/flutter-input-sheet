@@ -1,3 +1,8 @@
+## [0.1.2]  
+
+- [x] Fixed issue where longtext input needs TextInputType.multiline.
+- [x] Fixed IpsInputDate bug where it got error and do not update state.
+
 ## [0.1.1]  
 
 - [x] Setted default autofocus keyboard to true.

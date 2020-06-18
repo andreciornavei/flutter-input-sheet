@@ -248,7 +248,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   value: _dinner,
                   format: "HH:mm",
                   pickerFormat: "HH|mm",
-                  minuteDivider: 15,
+                  minuteDivider: 10,
                   onDone: (String value) => setState(() {
                     _dinner = value;
                   }),
@@ -275,7 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   maxDateTime: DateTime.now().add(Duration(days: 7)),
                   format: "yyyy/MM/dd HH:mm",
                   pickerFormat: "yyyy/MM/dd|HH|mm",
-                  minuteDivider: 15,
+                  minuteDivider: 5,
                   onDone: (String value) => setState(() {
                     _appointment = value;
                   }),
