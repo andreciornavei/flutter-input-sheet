@@ -1,3 +1,7 @@
+## [0.1.3]  
+
+- [x] Updated mobx dependency versions.
+
 ## [0.1.2]  
 
 - [x] Fixed issue where longtext input needs TextInputType.multiline.
