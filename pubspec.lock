@@ -243,7 +243,7 @@ packages:
       name: flutter_mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4+3"
+    version: "1.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -372,14 +372,14 @@ packages:
       name: mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.10"
+    version: "1.2.1"
   mobx_codegen:
     dependency: "direct dev"
     description:
       name: mobx_codegen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.11"
+    version: "1.1.0"
   nested:
     dependency: transitive
     description:

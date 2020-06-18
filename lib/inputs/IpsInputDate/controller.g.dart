@@ -13,17 +13,15 @@ mixin _$IpsInputDateController on _IpsInputDateController, Store {
 
   @override
   DateTime get currentDate {
-    _$currentDateAtom.context.enforceReadPolicy(_$currentDateAtom);
-    _$currentDateAtom.reportObserved();
+    _$currentDateAtom.reportRead();
     return super.currentDate;
   }
 
   @override
   set currentDate(DateTime value) {
-    _$currentDateAtom.context.conditionallyRunInAction(() {
+    _$currentDateAtom.reportWrite(value, super.currentDate, () {
       super.currentDate = value;
-      _$currentDateAtom.reportChanged();
-    }, _$currentDateAtom, name: '${_$currentDateAtom.name}_set');
+    });
   }
 
   final _$_IpsInputDateControllerActionController =
@@ -31,12 +29,19 @@ mixin _$IpsInputDateController on _IpsInputDateController, Store {
 
   @override
   dynamic setCurrentDate(DateTime newValue, List<int> ints) {
-    final _$actionInfo =
-        _$_IpsInputDateControllerActionController.startAction();
+    final _$actionInfo = _$_IpsInputDateControllerActionController.startAction(
+        name: '_IpsInputDateController.setCurrentDate');
     try {
       return super.setCurrentDate(newValue, ints);
     } finally {
       _$_IpsInputDateControllerActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    return '''
+currentDate: ${currentDate}
+    ''';
   }
 }
