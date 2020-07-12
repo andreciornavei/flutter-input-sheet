@@ -1,6 +1,6 @@
 name: input_sheet
 description: A flutter package to help apps with extensive forms, implementing inputs as BottomSheet to make it enjoyable.
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/andreciornavei/flutter-input-sheet
 
 environment:

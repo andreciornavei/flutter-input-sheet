@@ -28,10 +28,8 @@ class HandlePermission {
   }
 
   static Future<void> location(Function onSuccess) async {
-    if (
-      await Permission.location.isGranted &&
-      await Permission.location.serviceStatus.isEnabled
-    ) {
+    if (await Permission.location.isGranted &&
+        await Permission.location.serviceStatus.isEnabled) {
       onSuccess();
     } else {
       if (await Permission.location.request().isGranted) {

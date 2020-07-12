@@ -67,7 +67,9 @@ class _IpsInputMultioptions extends State<IpsInputMultioptions> {
       decoration: BoxDecoration(color: Colors.white),
       child: ListView.separated(
         itemCount: this.widget.options.length,
-        separatorBuilder: (_, __) => Divider(height: 1,),
+        separatorBuilder: (_, __) => Divider(
+          height: 1,
+        ),
         itemBuilder: (_, index) {
           String key = this.widget.options.keys.toList().elementAt(index);
           return ListTile(
@@ -75,14 +77,20 @@ class _IpsInputMultioptions extends State<IpsInputMultioptions> {
             dense: true,
             title: Text(
               this.widget.options[key],
-              style: this.widget.optionTextStyle ?? TextStyle(
-                fontSize: 14,
-              ),
+              style: this.widget.optionTextStyle ??
+                  TextStyle(
+                    fontSize: 14,
+                  ),
             ),
             trailing: Visibility(
               visible: _selectedOptions.contains(key),
-              replacement: this.widget.optionSelectedIcon ?? Icon(FeatherIcons.square, size: 21,),
-              child: this.widget.optionUnselectedIcon ?? Icon(FeatherIcons.checkSquare, size: 21),
+              replacement: this.widget.optionSelectedIcon ??
+                  Icon(
+                    FeatherIcons.square,
+                    size: 21,
+                  ),
+              child: this.widget.optionUnselectedIcon ??
+                  Icon(FeatherIcons.checkSquare, size: 21),
             ),
           );
         },

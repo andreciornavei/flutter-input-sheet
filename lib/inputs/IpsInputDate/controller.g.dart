@@ -41,7 +41,7 @@ mixin _$IpsInputDateController on _IpsInputDateController, Store {
   @override
   String toString() {
     return '''
-currentDate: ${currentDate}
+currentDate: $currentDate
     ''';
   }
 }

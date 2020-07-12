@@ -1,3 +1,7 @@
+## [0.2.1]  
+
+- [x] Fix filename syntax and format file contents.
+
 ## [0.2.0]  
 
 - [x] Implemented multioptions feature.

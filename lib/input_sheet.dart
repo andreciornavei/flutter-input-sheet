@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:input_sheet/inputs/IpsInputCamera.dart';
 import 'package:input_sheet/inputs/IpsInputDatetime.dart';
-import 'package:input_sheet/inputs/IpsInputMultiOptions.dart';
+import 'package:input_sheet/inputs/IpsInputMultioptions.dart';
 import 'package:input_sheet/inputs/IpsInputTime.dart';
 import 'package:input_sheet/utils/IpsMediaType.dart';
 import 'package:input_sheet/utils/IpsModeCamera.dart';
