@@ -224,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 15),
               IpsCard(
                 label: IpsLabel("Movie categories you like"),
-                value: IpsValue(_selectedCategoriesLabel ?? "Unknown"),
+                value: IpsValue(_selectedCategoriesLabel),
                 icon: IpsIcon(FeatherIcons.menu),
                 error: IpsError(_errors['_currency']),
                 onClick: () => InputSheet(

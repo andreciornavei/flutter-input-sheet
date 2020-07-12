@@ -1,6 +1,6 @@
 ## [0.2.0]  
 
-- [x] Implemented Multioptions feature.
+- [x] Implemented multioptions feature.
 
 ## [0.1.3]  
 

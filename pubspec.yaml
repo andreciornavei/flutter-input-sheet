@@ -25,7 +25,7 @@ dependencies:
   flutter_feather_icons: ^1.0.3
   cached_network_image: ^2.2.0+1
   flutter_keyboard_size: ^0.1.2+2
-  permission_handler: ^4.4.0+hotfix.2
+  permission_handler: ^5.0.1+1
   flutter_cupertino_date_picker: ^1.0.24  
 
 dev_dependencies:
