@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:input_sheet/inputs/IpsInputCamera.dart';
 import 'package:input_sheet/inputs/IpsInputDatetime.dart';
+import 'package:input_sheet/inputs/IpsInputMultiOptions.dart';
 import 'package:input_sheet/inputs/IpsInputTime.dart';
 import 'package:input_sheet/utils/IpsMediaType.dart';
 import 'package:input_sheet/utils/IpsModeCamera.dart';
@@ -228,6 +229,31 @@ class InputSheet {
     );
   }
 
+  multioptions({
+    List<String> value,
+    Map<String, String> options,
+    Function(List<String>) onDone,
+    TextStyle optionTextStyle,
+    Icon optionSelectedIcon,
+    Icon optionUnselectedIcon,
+  }) {
+    Sheet(
+      this._context,
+      this.label,
+      this.cancelText,
+      this.doneText,
+    ).open(
+      new IpsInputMultioptions(
+        onDone,
+        value: value,
+        options: options,
+        optionTextStyle: optionTextStyle,
+        optionSelectedIcon: optionSelectedIcon,
+        optionUnselectedIcon: optionUnselectedIcon,
+      ),
+    );
+  }
+
   photo({
     File file,
     String url,
@@ -305,5 +331,4 @@ class InputSheet {
   //TO-DO
   //slider() {}
   //colors() {}
-  //multioptions() {}
 }

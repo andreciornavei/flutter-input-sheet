@@ -1,3 +1,7 @@
+## [0.2.0]  
+
+- [x] Implemented Multioptions feature.
+
 ## [0.1.3]  
 
 - [x] Updated mobx dependency versions.

@@ -15,9 +15,14 @@ class IpsInputMask extends IpsInput {
 
   final _IpsInputMask state = _IpsInputMask();
 
-  IpsInputMask(this._textInputType, this._placeholder, this._masks, this._value,
-      this._onDone,
-      {this.autofocus = false});
+  IpsInputMask(
+    this._textInputType,
+    this._placeholder,
+    this._masks,
+    this._value,
+    this._onDone, {
+    this.autofocus = false,
+  });
 
   @override
   onDone() {

@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _phone;
   double _currency;
   String _flavor;
+  List<String> _selectedCategories;
   String _birth;
   String _dinner;
   String _appointment;
@@ -64,6 +65,20 @@ class _MyHomePageState extends State<MyHomePage> {
     "1": "Vanilla",
     "2": "Strawberry",
   };
+
+  Map<String, String> _categories = {
+    "comedy"    : "Comedy",
+    "romance"   : "Romance",
+    "horror"    : "Horror",
+    "action"    : "Action",
+    "adventure" : "Adventure",
+    "dramaturgy": "Dramaturgy",
+  };
+
+  String get _selectedCategoriesLabel {
+    List<String> selecteds = (_selectedCategories??[]).map((value) => _categories[value]).toList();
+    return selecteds.length == 0 ? "Touch to select..." : selecteds.join(", ");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +214,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   options: _flavors,
                   onDone: (String value) => setState(() {
                     _flavor = value;
+                  }),
+                ),
+              ),
+              SizedBox(height: 25),
+              Text(
+                'Multiple Options example:',
+              ),
+              SizedBox(height: 15),
+              IpsCard(
+                label: IpsLabel("Movie categories you like"),
+                value: IpsValue(_selectedCategoriesLabel ?? "Unknown"),
+                icon: IpsIcon(FeatherIcons.menu),
+                error: IpsError(_errors['_currency']),
+                onClick: () => InputSheet(
+                  context,
+                  label: "Choose many categories",
+                  cancelText: "Cancel",
+                  doneText: "Confirm",
+                ).multioptions(
+                  value: _selectedCategories,
+                  options: _categories,
+                  onDone: (List<String> value) => setState(() {
+                    _selectedCategories = value;
                   }),
                 ),
               ),
