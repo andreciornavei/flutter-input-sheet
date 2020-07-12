@@ -62,11 +62,12 @@ class _IpsInputMultioptions extends State<IpsInputMultioptions> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(top: 8.0),
       height: 210,
       decoration: BoxDecoration(color: Colors.white),
-      child: ListView.builder(
+      child: ListView.separated(
         itemCount: this.widget.options.length,
+        separatorBuilder: (_, __) => Divider(height: 1,),
         itemBuilder: (_, index) {
           String key = this.widget.options.keys.toList().elementAt(index);
           return ListTile(

@@ -62,9 +62,9 @@ You will need to add permissions in your AndroidManifest.xml to read and write e
 - [x] DateTime
 - [x] Photo
 - [x] Video
+- [x] MultiOption
 - [ ] Slider
 - [ ] Color
-- [ ] MultiOption
 - [ ] Qrcode
 - [ ] Map
 
@@ -448,9 +448,35 @@ InputSheet(context).options(
 
 | Parameters | Type                  | Description                                                                            |
 | ---------- | --------------------- | -------------------------------------------------------------------------------------- |
-| options    | Map<\String, \String> | A map with value-key pair to be selected as an option                                  |
+| options    | Map\<String, String> | A map with value-key pair to be selected as an option                                  |
 | value      | String                | A default selected key of options                                                      |
 | onDone     | Function(String)      | Callback function called when select an option. It will return the selected key option |
+
+---
+
+### **Multi Options**
+
+_This input implements options to multiple selections_
+
+```dart
+
+InputSheet(context).multioptions(
+    options: { '0':'Comedy' ,'1':'Romance', '2':'Action'},
+    value: _value,
+    onDone: (List<String> value) => setState(() {
+        _value = value;
+    }),
+);
+```
+
+| Parameters | Type                  | Description                                                                            |
+| ---------- | --------------------- | -------------------------------------------------------------------------------------- |
+| options    | Map\<String, String>  | A map with value-key pair to be selected as an option                                  |
+| value      | List\<String>         | A list of selected keys of options                                                      |
+| onDone     | Function(List\<String>)      | Callback function called when select an option. It will return the list of selected keys options |
+| optionTextStyle     | TextStyle | A customized style to list tile option label
+| optionSelectedIcon     | Icon | A customized icon for selected option
+| optionUnselectedIcon   | Icon | A customized icon for unselected option
 
 ---
 
