@@ -1,6 +1,7 @@
 ## [0.2.0]  
 
 - [x] Implemented multioptions feature.
+- [x] Updated handled permissions to latest version.
 
 ## [0.1.3]  
 
